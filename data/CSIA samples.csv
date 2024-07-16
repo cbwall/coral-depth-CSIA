@@ -1,0 +1,113 @@
+species,glass.tube.ID,coral.ID,depth.ft,sample.ID,fraction,AA,AA.short,d13C
+M.capitata,1H,MC1,1,MC1.H,host,Alanine,Ala,-15.27
+M.capitata,1H,MC1,1,MC1.H,host,Glycine,Gly,-5.89
+M.capitata,1H,MC1,1,MC1.H,host,Threonine,Thr,-10.49
+M.capitata,1H,MC1,1,MC1.H,host,Serine,Ser,-14.7
+M.capitata,1H,MC1,1,MC1.H,host,Valine,Val,-24.35
+M.capitata,1H,MC1,1,MC1.H,host,Leucine,Leu,-27.15
+M.capitata,1H,MC1,1,MC1.H,host,Isoleucine,Ile,-14.69
+M.capitata,1H,MC1,1,MC1.H,host,Norleucine,Nor,-28.45
+M.capitata,1H,MC1,1,MC1.H,host,Proline,Pro,-10.92
+M.capitata,1H,MC1,1,MC1.H,host,Aspartic acid,Asp,-12.48
+M.capitata,1H,MC1,1,MC1.H,host,Methionine,Met,-12.84
+M.capitata,1H,MC1,1,MC1.H,host,Glutamic acid,Glx,-13.57
+M.capitata,1H,MC1,1,MC1.H,host,Phenylalanine,Phe,-24.67
+M.capitata,1H,MC1,1,MC1.H,host,Aminoadipic Acid,Ami,-13.73
+M.capitata,1H,MC1,1,MC1.H,host,Tyrosine,Tyr,-20.29
+M.capitata,1H,MC1,1,MC1.H,host,Lysine,Lys,-13.81
+M.capitata,2H,MC2,2,MC2.H,host,Alanine,Ala,-11.75
+M.capitata,2H,MC2,2,MC2.H,host,Glycine,Gly,-6.59
+M.capitata,2H,MC2,2,MC2.H,host,Threonine,Thr,-8.24
+M.capitata,2H,MC2,2,MC2.H,host,Serine,Ser,-10.25
+M.capitata,2H,MC2,2,MC2.H,host,Valine,Val,-21.38
+M.capitata,2H,MC2,2,MC2.H,host,Leucine,Leu,-25.22
+M.capitata,2H,MC2,2,MC2.H,host,Isoleucine,Ile,-11.19
+M.capitata,2H,MC2,2,MC2.H,host,Norleucine,Nor,-28.31
+M.capitata,2H,MC2,2,MC2.H,host,Proline,Pro,-9.23
+M.capitata,2H,MC2,2,MC2.H,host,Aspartic acid,Asp,-8.97
+M.capitata,2H,MC2,2,MC2.H,host,Methionine,Met,-12.23
+M.capitata,2H,MC2,2,MC2.H,host,Glutamic acid,Glx,-11.91
+M.capitata,2H,MC2,2,MC2.H,host,Phenylalanine,Phe,-23.49
+M.capitata,2H,MC2,2,MC2.H,host,Aminoadipic Acid,Ami,-14.52
+M.capitata,2H,MC2,2,MC2.H,host,Tyrosine,Tyr,NA
+M.capitata,2H,MC2,2,MC2.H,host,Lysine,Lys,-12.18
+M.capitata,3H,MC8,15,MC8.H,host,Alanine,Ala,-15.09
+M.capitata,3H,MC8,15,MC8.H,host,Glycine,Gly,-9.37
+M.capitata,3H,MC8,15,MC8.H,host,Threonine,Thr,-10
+M.capitata,3H,MC8,15,MC8.H,host,Serine,Ser,-9.38
+M.capitata,3H,MC8,15,MC8.H,host,Valine,Val,-23.23
+M.capitata,3H,MC8,15,MC8.H,host,Leucine,Leu,-27.5
+M.capitata,3H,MC8,15,MC8.H,host,Isoleucine,Ile,-13.56
+M.capitata,3H,MC8,15,MC8.H,host,Norleucine,Nor,-28.74
+M.capitata,3H,MC8,15,MC8.H,host,Proline,Pro,-12.15
+M.capitata,3H,MC8,15,MC8.H,host,Aspartic acid,Asp,-14.75
+M.capitata,3H,MC8,15,MC8.H,host,Methionine,Met,-14.34
+M.capitata,3H,MC8,15,MC8.H,host,Glutamic acid,Glx,-14.66
+M.capitata,3H,MC8,15,MC8.H,host,Phenylalanine,Phe,-25.49
+M.capitata,3H,MC8,15,MC8.H,host,Aminoadipic Acid,Ami,-13.32
+M.capitata,3H,MC8,15,MC8.H,host,Tyrosine,Tyr,NA
+M.capitata,3H,MC8,15,MC8.H,host,Lysine,Lys,-19.65
+M.capitata,4H,MC9,15,MC9.H,host,Alanine,Ala,-13.45
+M.capitata,4H,MC9,15,MC9.H,host,Glycine,Gly,-10.16
+M.capitata,4H,MC9,15,MC9.H,host,Threonine,Thr,-9.34
+M.capitata,4H,MC9,15,MC9.H,host,Serine,Ser,-8.91
+M.capitata,4H,MC9,15,MC9.H,host,Valine,Val,-23.1
+M.capitata,4H,MC9,15,MC9.H,host,Leucine,Leu,-27.6
+M.capitata,4H,MC9,15,MC9.H,host,Isoleucine,Ile,-14.83
+M.capitata,4H,MC9,15,MC9.H,host,Norleucine,Nor,-28.94
+M.capitata,4H,MC9,15,MC9.H,host,Proline,Pro,-12.19
+M.capitata,4H,MC9,15,MC9.H,host,Aspartic acid,Asp,-14.52
+M.capitata,4H,MC9,15,MC9.H,host,Methionine,Met,-15.69
+M.capitata,4H,MC9,15,MC9.H,host,Glutamic acid,Glx,-14.33
+M.capitata,4H,MC9,15,MC9.H,host,Phenylalanine,Phe,-25.8
+M.capitata,4H,MC9,15,MC9.H,host,Aminoadipic Acid,Ami,-12.47
+M.capitata,4H,MC9,15,MC9.H,host,Tyrosine,Tyr,-23.36
+M.capitata,4H,MC9,15,MC9.H,host,Lysine,Lys,-18.85
+M.capitata,6H,MC12,35,MC12.H,host,Alanine,Ala,-15.7
+M.capitata,6H,MC12,35,MC12.H,host,Glycine,Gly,-11.4
+M.capitata,6H,MC12,35,MC12.H,host,Threonine,Thr,-11.35
+M.capitata,6H,MC12,35,MC12.H,host,Serine,Ser,-15
+M.capitata,6H,MC12,35,MC12.H,host,Valine,Val,-22.73
+M.capitata,6H,MC12,35,MC12.H,host,Leucine,Leu,-28.7
+M.capitata,6H,MC12,35,MC12.H,host,Isoleucine,Ile,-14.32
+M.capitata,6H,MC12,35,MC12.H,host,Norleucine,Nor,-30.52
+M.capitata,6H,MC12,35,MC12.H,host,Proline,Pro,-13.99
+M.capitata,6H,MC12,35,MC12.H,host,Aspartic acid,Asp,-17
+M.capitata,6H,MC12,35,MC12.H,host,Methionine,Met,-13.97
+M.capitata,6H,MC12,35,MC12.H,host,Glutamic acid,Glx,-15.97
+M.capitata,6H,MC12,35,MC12.H,host,Phenylalanine,Phe,-26.05
+M.capitata,6H,MC12,35,MC12.H,host,Aminoadipic Acid,Ami,-12.57
+M.capitata,6H,MC12,35,MC12.H,host,Tyrosine,Tyr,-25.04
+M.capitata,6H,MC12,35,MC12.H,host,Lysine,Lys,-18.66
+M.capitata,7H,MC15,33,MC15.H,host,Alanine,Ala,-16.11
+M.capitata,7H,MC15,33,MC15.H,host,Glycine,Gly,-7.23
+M.capitata,7H,MC15,33,MC15.H,host,Threonine,Thr,-10.4
+M.capitata,7H,MC15,33,MC15.H,host,Serine,Ser,-9.04
+M.capitata,7H,MC15,33,MC15.H,host,Valine,Val,-23.65
+M.capitata,7H,MC15,33,MC15.H,host,Leucine,Leu,-28.09
+M.capitata,7H,MC15,33,MC15.H,host,Isoleucine,Ile,-13.74
+M.capitata,7H,MC15,33,MC15.H,host,Norleucine,Nor,-29.94
+M.capitata,7H,MC15,33,MC15.H,host,Proline,Pro,-12.92
+M.capitata,7H,MC15,33,MC15.H,host,Aspartic acid,Asp,-15.41
+M.capitata,7H,MC15,33,MC15.H,host,Methionine,Met,-16.21
+M.capitata,7H,MC15,33,MC15.H,host,Glutamic acid,Glx,-15.99
+M.capitata,7H,MC15,33,MC15.H,host,Phenylalanine,Phe,-25.68
+M.capitata,7H,MC15,33,MC15.H,host,Aminoadipic Acid,Ami,-13.29
+M.capitata,7H,MC15,33,MC15.H,host,Tyrosine,Tyr,-23.37
+M.capitata,7H,MC15,33,MC15.H,host,Lysine,Lys,-18.96
+M.capitata,8S,MC15,33,MC15.S,symb,Alanine,Ala,-16.86
+M.capitata,8S,MC15,33,MC15.S,symb,Glycine,Gly,-13.6
+M.capitata,8S,MC15,33,MC15.S,symb,Threonine,Thr,-10.84
+M.capitata,8S,MC15,33,MC15.S,symb,Serine,Ser,-11.16
+M.capitata,8S,MC15,33,MC15.S,symb,Valine,Val,-25.37
+M.capitata,8S,MC15,33,MC15.S,symb,Leucine,Leu,-27.63
+M.capitata,8S,MC15,33,MC15.S,symb,Isoleucine,Ile,-15.55
+M.capitata,8S,MC15,33,MC15.S,symb,Norleucine,Nor,-28.34
+M.capitata,8S,MC15,33,MC15.S,symb,Proline,Pro,-13.31
+M.capitata,8S,MC15,33,MC15.S,symb,Aspartic acid,Asp,-16.29
+M.capitata,8S,MC15,33,MC15.S,symb,Methionine,Met,-15.29
+M.capitata,8S,MC15,33,MC15.S,symb,Glutamic acid,Glx,-14.78
+M.capitata,8S,MC15,33,MC15.S,symb,Phenylalanine,Phe,-24.93
+M.capitata,8S,MC15,33,MC15.S,symb,Aminoadipic Acid,Ami,-12.59
+M.capitata,8S,MC15,33,MC15.S,symb,Tyrosine,Tyr,-20.55
+M.capitata,8S,MC15,33,MC15.S,symb,Lysine,Lys,-19.54

@@ -1,0 +1,547 @@
+---
+title: "coral-depth-CSIA"
+author: "CB Wall"
+date: "07/12/2024"
+output:
+  html_document:
+    code_folding: hide
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup chunk, setup, include = FALSE, cache=FALSE, message=FALSE, warning=FALSE, collapse=TRUE}
+if (!require('knitr')) install.packages('knitr'); library('knitr')
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.align='center')
+
+# load packages
+if (!require("pacman")) install.packages("pacman") # for rapid install if not in library
+
+# use pacman to load all the packages you are missing!
+pacman::p_load('knitr', 'lme4', 'lmerTest', 'tidyverse', 'effects', 'plyr', 'dplyr', 'plotrix', 'car',"gridExtra", "cowplot", "tools", "mgcv", "gratia", "MASS", "stats", "tidymv", "sjstats", "coin", "emmeans", "ggplot2", "mda", "nortest", "reshape2", "gmm", "propagate","ggmap", "RgoogleMaps", "MixSIAR","GGally", "ggbiplot", "ggcorrplot", "vegan", "pairwiseAdonis")
+
+
+### general formatting for figures 
+Fig.formatting<-(theme_classic()) +
+  theme(text=element_text(size=10),
+        axis.line=element_blank(),
+        legend.text.align = 0,
+        legend.text=element_text(size=10),
+        #legend.title = element_blank(),
+        panel.border = element_rect(fill=NA, colour = "black", linewidth =1),
+        aspect.ratio=1, 
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.text.y=element_text(
+          margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm"), colour="black", size=10), 
+        axis.text.x=element_text(
+          margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm"), colour="black", size=8)) +
+  theme(legend.key.size = unit(0.4, "cm")) +
+  theme(aspect.ratio=1.3) +
+  theme(panel.spacing=unit(c(0, 0, 0, 0), "cm"))
+
+```
+
+
+```{r data measured AAs}
+df<-read.csv("data/CSIA samples.csv")
+
+# format metadata
+make.fac<-c("species", "coral.ID", "glass.tube.ID", "sample.ID", "fraction", "AA", "AA.short")
+df[make.fac]<-lapply(df[make.fac], factor) # make all these factors
+
+df$depth.ft<-as.numeric(df$depth.ft)
+
+# make a meter column
+df<- df %>% 
+  dplyr::mutate(depth.m = depth.ft*0.3048)
+
+df$depth.bin<-ifelse(df$depth.ft<7, "shallow",
+                    ifelse(df$depth.ft>30, "deep", "intermediate"))
+
+df$depth.bin<-factor(df$depth.bin, levels=c("shallow", "intermediate", "deep"))
+                    
+# remove unwanted AAs
+notwanted.AAs<-c("Met", "Nor", "Ami")
+
+df<-df %>% 
+  dplyr::filter(!as.factor(AA.short) %in% notwanted.AAs)
+df<-droplevels(df)
+
+# get categories
+df$AA.cat<-ifelse(df$AA.short=="Ala" |df$AA.short=="Asp" |
+                               df$AA.short=="Gly" | df$AA.short=="Glx" |
+                               df$AA.short=="Pro" | df$AA.short=="Ser" | 
+                               df$AA.short=="Tyr", "NESS", "ESS")
+
+df$AA.short<-factor(df$AA.short, levels=c("Ala","Asp", "Glx", "Gly", "Pro", "Ser", "Tyr", "Ile", "Leu", "Lys", "Phe", "Thr", "Val"))
+
+####### plot by EAA, with groups of sources and consumers
+AAbox<-ggplot(df, aes(x=AA.short, y=d13C, fill=depth.bin, color=fraction))+
+  #geom_jitter(aes(fill=Group), colour="black",pch=21, size=1)+
+  ylim(-30,-3)+
+  geom_boxplot(alpha=0.7)+
+  scale_fill_manual(values=c("gray90", "gray50", "gray10"))+ 
+  scale_color_manual(values=c("gray10", "mediumseagreen")) +
+  geom_vline(xintercept=7.5, linetype="solid", color = "gray") +
+  annotate(geom="text", label="Nonessential-AA", x=4, y=-3, color="gray40") +
+  annotate(geom="text", label="Essential-AA", x=10, y=-3, color="gray40") +
+  ylab(expression(paste("AA  ", delta^{13}, C, " (\u2030)"))) +
+  xlab("Amino Acids") +
+  theme_classic()
+
+```
+
+```{r ESVI MC ESS}
+# ESS only
+
+dfESS<-df[(df$AA.cat=="ESS"),]
+dfESS.short<- dfESS %>%
+  dplyr::select(species, coral.ID, glass.tube.ID, sample.ID, fraction, depth.m, depth.bin, AA.short, d13C)
+
+library(reshape2)
+df.ESS.wide<-reshape(dfESS.short, idvar= c("species", "coral.ID", "glass.tube.ID", "sample.ID", "fraction", 
+                                           "depth.m", "depth.bin"), timevar="AA.short", direction='wide')
+
+dfESS.norm<-df.ESS.wide
+colnames(dfESS.norm)<-c("species", "coral.ID", "glass.tube.ID", "sample.ID", "fraction", "depth.m", "depth.bin",
+                        "Thr", "Val", "Leu", "Ile", "Phe", "Lys")
+
+#make ID column to run the normalization
+dfESS.norm$ID<-1:nrow(dfESS.norm)
+for(i in 1:length(dfESS.norm$ID)){
+  dfESS.norm$Thr.n[i] <- (dfESS.norm$Thr[i]-mean(as.numeric(dfESS.norm[i,8:13])))
+  dfESS.norm$Val.n[i] <- (dfESS.norm$Val[i]-mean(as.numeric(dfESS.norm[i,8:13])))
+  dfESS.norm$Leu.n[i] <- (dfESS.norm$Leu[i]-mean(as.numeric(dfESS.norm[i,8:13])))
+  dfESS.norm$Ile.n[i] <- (dfESS.norm$Ile[i]-mean(as.numeric(dfESS.norm[i,8:13])))
+  dfESS.norm$Phe.n[i] <- (dfESS.norm$Phe[i]-mean(as.numeric(dfESS.norm[i,8:13])))
+  dfESS.norm$Lys.n[i] <- (dfESS.norm$Lys[i]-mean(as.numeric(dfESS.norm[i,8:13])))
+}
+
+#remove non-norm AAs
+dfESS.only<-dfESS.norm %>%
+  dplyr::select ("species", "coral.ID", "glass.tube.ID", "sample.ID", "fraction", "depth.m", "depth.bin", "Thr.n", "Val.n", "Leu.n", "Ile.n", "Phe.n", "Lys.n")
+
+
+## save a wide format version of all data
+df.wide<- df %>%
+  dplyr::select(species, coral.ID, glass.tube.ID, sample.ID, fraction, depth.m, depth.bin, AA.short, d13C)
+
+df.wide<-reshape(df.wide, idvar= c("species", "coral.ID", "glass.tube.ID", "sample.ID", "fraction", "depth.m", "depth.bin"), timevar="AA.short", direction='wide')
+
+ESVI.merge <- merge.data.frame(df.wide, dfESS.only)
+write.csv(ESVI.merge, "output/ESVI.wide.csv")
+
+##### melt back to long format
+
+# make depth a factor so we can melt
+dfESS.only$depth.m<-as.factor(dfESS.only$depth.m)
+df.ESS.norm.long<-melt(dfESS.only, idvar= c("sample.ID", "fraction", "depth.m"))
+
+#back to numeric
+df.ESS.norm.long$depth.m<-as.numeric(df.ESS.norm.long$depth.m)
+
+# rename factors
+df.ESS.norm.long <- df.ESS.norm.long %>% 
+       dplyr::rename("ESS.norm" = "variable")
+df.ESS.norm.long <- df.ESS.norm.long %>% 
+       dplyr::rename("d13C" = "value")
+
+
+df.ESS.norm.long$ESS.norm<-factor(df.ESS.norm.long$ESS.norm, 
+                                  levels=c("Ile.n", "Leu.n", "Lys.n", "Phe.n", "Thr.n", "Val.n"))
+
+####### plot by ESS, with groups of sources and consumers
+ESSbox<-ggplot(df.ESS.norm.long, aes(x=ESS.norm, y=d13C, fill=depth.bin, color=fraction))+
+  geom_boxplot(alpha=0.7)+
+  scale_fill_manual(values=c("gray90", "gray50", "gray10"))+  
+  scale_color_manual(values=c("gray10", "mediumseagreen")) +
+  ylim(-10,10)+
+  ylab(expression(paste("AA  ", delta^{13}, C, " (\u2030)"))) +
+  xlab("Amino Acids") +
+  theme_classic()
+
+ESVI.mc<-grid.arrange(AAbox, ESSbox)
+dev.copy(pdf, "figures/ESVI.MC.box.pdf", width = 9, height = 10, encod="MacRoman")
+dev.off()
+```
+
+```{r Wall data}
+wall.mc<-read.csv("data/Wall_2021data.csv")
+
+# remove unwanted AAs
+notwanted.AAs<-c("Met", "Nor", "Ami")
+
+wall.mc<-wall.mc %>% 
+  dplyr::filter(!as.factor(AA.short) %in% notwanted.AAs)
+
+wall.mc<-droplevels(wall.mc)
+
+# get categories
+wall.mc$AA.cat<-ifelse(wall.mc$AA.short=="Ala" |wall.mc$AA.short=="Asp" |
+                               wall.mc$AA.short=="Gly" | wall.mc$AA.short=="Glx" |
+                               wall.mc$AA.short=="Pro" | wall.mc$AA.short=="Ser" | 
+                               wall.mc$AA.short=="Tyr", "NESS", "ESS")
+
+wall.mc$AA.short<-factor(wall.mc$AA.short, 
+                         levels=c("Ala","Asp", "Glx", "Gly", "Pro", "Ser", 
+                                  "Tyr", "Ile", "Leu", "Lys", "Phe", "Thr", "Val"))
+
+wall.mc$fraction<-factor(wall.mc$fraction, levels=c("host", "symb", "plank"))
+
+####### plot by EAA, with groups of sources and consumers
+AAbox.wall<-ggplot(wall.mc, aes(x=AA.short, y=d13C, fill=fraction, color=fraction))+
+  geom_boxplot(alpha=0.5)+
+  #geom_jitter(aes(fill=Group), colour="black",pch=21, size=1)+
+  #scale_fill_manual(values=c("cadetblue1", "dodgerblue2", "darkslategray4"))+ 
+  #scale_color_manual(values=c("gray10", "coral", "blue")) +
+  ylim(-30,-3)+
+  geom_vline(xintercept=7.5, linetype="solid", color = "gray") +
+  annotate(geom="text", label="Nonessential-AA", x=4, y=-3, color="gray40") +
+  annotate(geom="text", label="Essential-AA", x=10, y=-3, color="gray40") +
+  ylab(expression(paste("AA  ", delta^{13}, C, " (\u2030)"))) +
+  xlab("Amino Acids") +
+  theme_classic()
+```
+
+
+```{r Wall ESS only}
+# ESS only
+
+dfESS.wall<-wall.mc[(wall.mc$AA.cat=="ESS"),]
+dfESS.wall.short<- dfESS.wall %>%
+  dplyr::select(species, sample.ID, treat.int, fraction, AA.short, d13C)
+
+df.ESS.wall.wide<-reshape(dfESS.wall.short, idvar= c("species", "sample.ID", "treat.int", "fraction"), timevar="AA.short", direction='wide')
+
+dfESS.wall.norm<-df.ESS.wall.wide
+colnames(dfESS.wall.norm)<-c("species", "sample.ID", "treat.int", "fraction", "Thr", "Val", "Leu", "Ile", "Phe", "Lys")
+
+#make ID column to run the normalization
+dfESS.wall.norm$ID<-1:nrow(dfESS.wall.norm)
+for(i in 1:length(dfESS.wall.norm$ID)){
+  dfESS.wall.norm$Thr.n[i] <- (dfESS.wall.norm$Thr[i]-mean(as.numeric(dfESS.wall.norm[i,5:10])))
+  dfESS.wall.norm$Val.n[i] <- (dfESS.wall.norm$Val[i]-mean(as.numeric(dfESS.wall.norm[i,5:10])))
+  dfESS.wall.norm$Leu.n[i] <- (dfESS.wall.norm$Leu[i]-mean(as.numeric(dfESS.wall.norm[i,5:10])))
+  dfESS.wall.norm$Ile.n[i] <- (dfESS.wall.norm$Ile[i]-mean(as.numeric(dfESS.wall.norm[i,5:10])))
+  dfESS.wall.norm$Phe.n[i] <- (dfESS.wall.norm$Phe[i]-mean(as.numeric(dfESS.wall.norm[i,5:10])))
+  dfESS.wall.norm$Lys.n[i] <- (dfESS.wall.norm$Lys[i]-mean(as.numeric(dfESS.wall.norm[i,5:10])))
+}
+
+#remove non-norm AAs
+dfESS.norm.wall.only<-dfESS.wall.norm %>%
+  dplyr::select ("species", "sample.ID", "treat.int", "fraction", "Thr.n", "Val.n", "Leu.n", "Ile.n", "Phe.n", "Lys.n")
+
+
+## save a wide format version of all data
+wall.mc.wide<- wall.mc %>%
+  dplyr::select("species", "sample.ID", "treat.int", "fraction", "AA.short", "d13C")
+
+wall.mc.wide.df<-reshape(wall.mc.wide, idvar= c("species", "sample.ID", "treat.int", "fraction"), timevar="AA.short", direction='wide')
+
+Wall.merge <- merge.data.frame(wall.mc.wide.df, dfESS.norm.wall.only)
+write.csv(Wall.merge, "output/Wall.wide.csv")
+
+
+##### melt back to long format
+df.ESS.norm.wall.long<-melt(dfESS.norm.wall.only, idvar= c("sample.ID", "treat.int",  "fraction"))
+
+# rename factors
+df.ESS.norm.wall.long <- df.ESS.norm.wall.long %>% 
+       dplyr::rename("ESS.norm" = "variable")
+df.ESS.norm.wall.long <- df.ESS.norm.wall.long %>% 
+       dplyr::rename("d13C" = "value")
+
+
+df.ESS.norm.wall.long$ESS.norm<-factor(df.ESS.norm.wall.long$ESS.norm, 
+                                  levels=c("Ile.n", "Leu.n", "Lys.n", "Phe.n", "Thr.n", "Val.n"))
+
+
+####### plot by ESS, with groups of sources and consumers
+ESSbox.wall<-ggplot(df.ESS.norm.wall.long, aes(x=ESS.norm, y=d13C, fill=fraction, color=fraction))+
+  geom_boxplot(alpha=0.5)+
+  #geom_jitter(aes(fill=Group), colour="black",pch=21, size=1)+
+  #scale_fill_manual(values=c("cadetblue1", "dodgerblue2", "darkslategray4"))+ 
+  #scale_color_manual(values=c("gray10", "coral")) +
+  ylim(-10,10)+
+  ylab(expression(paste("AA  ", delta^{13}, C, " (\u2030)"))) +
+  xlab("Amino Acids") +
+  theme_classic()
+
+
+## compile
+wall.mc<-grid.arrange(AAbox.wall, ESSbox.wall)
+dev.copy(pdf, "figures/Wall.MC.box.pdf", width = 9, height = 10, encod="MacRoman")
+dev.off()
+```
+
+```{r}
+mario.df<-read.csv("data/Kaluhiokalani_CAA.csv")
+
+colnames(mario.df)<-c("sample.ID", "year", "location", "fraction", "coral.taxa", "Ala", "Gly", "Thr", "Ser", "Val", "Leu", "Ile", "Pro", "Asp", "Glx", "Phe", "Lys")
+
+mario.df$year<-as.factor(mario.df$year)
+mario.df$fraction<-factor(mario.df$fraction, levels=c("host", "symb", "plank"))
+
+##### melt to long format
+mario.df.long<-melt(mario.df, idvar= c("sample.ID", "year", "location", "fraction", "coral.taxa"))
+
+# rename factors
+mario.df.long <- mario.df.long %>% 
+       dplyr::rename("AA.short" = "variable")
+mario.df.long <- mario.df.long %>% 
+       dplyr::rename("d13C" = "value")
+
+mario.df.long$AA.short<-factor(mario.df.long$AA.short, 
+                         levels=c("Ala","Asp", "Glx", "Gly", "Pro", "Ser", 
+                                  "Tyr", "Ile", "Leu", "Lys", "Phe", "Thr", "Val"))
+
+####### plot by EAA, with groups of sources and consumers
+AAbox.mario<-ggplot(mario.df.long, aes(x=AA.short, y=d13C, fill=fraction))+
+  geom_boxplot(alpha=0.5)+
+  #geom_jitter(aes(fill=Group), colour="black",pch=21, size=1)+
+  #scale_fill_manual(values=c("cadetblue1", "dodgerblue2", "darkslategray4"))+ 
+  #scale_color_manual(values=c("gray10", "coral", "blue")) +
+  ylim(-30,-3)+
+  geom_vline(xintercept=7.5, linetype="solid", color = "gray") +
+  annotate(geom="text", label="Nonessential-AA", x=4, y=-3, color="gray40") +
+  annotate(geom="text", label="Essential-AA", x=10, y=-3, color="gray40") +
+  ylab(expression(paste("AA  ", delta^{13}, C, " (\u2030)"))) +
+  xlab("Amino Acids") +
+  theme_classic()
+
+##### 
+mario.ESS<-mario.df %>%
+  dplyr::select("sample.ID", "year", "location", "fraction", "coral.taxa", "Thr", "Val", "Leu", "Ile", "Phe", "Lys")
+
+#make ID column to run the normalization
+mario.ESS$ID<-1:nrow(mario.ESS)
+for(i in 1:length(mario.ESS$ID)){
+  mario.ESS$Thr.n[i] <- (mario.ESS$Thr[i]-mean(as.numeric(mario.ESS[i,6:11])))
+  mario.ESS$Val.n[i] <- (mario.ESS$Val[i]-mean(as.numeric(mario.ESS[i,6:11])))
+  mario.ESS$Leu.n[i] <- (mario.ESS$Leu[i]-mean(as.numeric(mario.ESS[i,6:11])))
+  mario.ESS$Ile.n[i] <- (mario.ESS$Ile[i]-mean(as.numeric(mario.ESS[i,6:11])))
+  mario.ESS$Phe.n[i] <- (mario.ESS$Phe[i]-mean(as.numeric(mario.ESS[i,6:11])))
+  mario.ESS$Lys.n[i] <- (mario.ESS$Lys[i]-mean(as.numeric(mario.ESS[i,6:11])))
+}
+
+mario.ESS.norm<- mario.ESS %>%
+  dplyr::select("sample.ID", "year", "location", "fraction", "coral.taxa", "Thr.n", "Val.n", "Leu.n", "Ile.n", "Phe.n", "Lys.n")
+
+# write full data
+Mario.merge<-merge(mario.df, mario.ESS.norm)
+write.csv(Mario.merge, "output/Mario.wide.csv")
+
+
+##### melt to long format
+mario.ESS.norm.long<-melt(mario.ESS.norm, idvar= c("sample.ID", "year", "location", "fraction", "coral.taxa"))
+# rename factors
+mario.ESS.norm.long <- mario.ESS.norm.long %>% 
+       dplyr::rename("ESS.norm" = "variable")
+mario.ESS.norm.long <- mario.ESS.norm.long %>% 
+       dplyr::rename("d13C" = "value")
+
+####### plot by EAA, with groups of sources and consumers
+ESSbox.mario<-ggplot(mario.ESS.norm.long, aes(x=ESS.norm, y=d13C, fill=fraction))+
+  geom_boxplot(alpha=0.5)+
+  #geom_jitter(aes(fill=Group), colour="black",pch=21, size=1)+
+  #scale_fill_manual(values=c("cadetblue1", "dodgerblue2", "darkslategray4"))+ 
+  #scale_color_manual(values=c("gray10", "coral", "blue")) +
+  ylim(-10,10)+
+  ylab(expression(paste("AA  ", delta^{13}, C, " (\u2030)"))) +
+  xlab("Amino Acids") +
+  theme_classic()
+
+```
+
+
+```{r}
+######### 
+######### 
+######### add in blake's data for more plankton
+BSO.plank<-read.csv("data/plankton_stonerosb.csv")
+
+# subset data
+BSO.plank.df<-BSO.plank %>% 
+  dplyr::select(sample.ID, year, location, 
+          Ala13C, Gly13C, Thr13C, Ser13C, Val13C, Leu13C, Ile13C, Pro13C, Asp13C, Glu13C, Phe13C, Tyr13C, Lys13C, study)
+
+colnames(BSO.plank.df)<-c("sample.ID", "year", "location", "Ala", "Gly", "Thr", "Ser", "Val", "Leu", "Ile", "Pro",
+                          "Asp", "Glx", "Phe", "Tyr", "Lys", "study")
+
+#ESS data
+BSO.plank.ESS<-BSO.plank.df %>%
+  dplyr::select("sample.ID", "year", "location", "study", "Thr", "Val", "Leu", "Ile", "Phe", "Lys")
+
+BSO.plank.ESS<-BSO.plank.ESS
+
+#make ID column to run the normalization
+BSO.plank.ESS$ID<-1:nrow(BSO.plank.ESS)
+for(i in 1:length(BSO.plank.ESS$ID)){
+  BSO.plank.ESS$Thr.n[i] <- (BSO.plank.ESS$Thr[i]-mean(as.numeric(BSO.plank.ESS[i,5:10])))
+  BSO.plank.ESS$Val.n[i] <- (BSO.plank.ESS$Val[i]-mean(as.numeric(BSO.plank.ESS[i,5:10])))
+  BSO.plank.ESS$Leu.n[i] <- (BSO.plank.ESS$Leu[i]-mean(as.numeric(BSO.plank.ESS[i,5:10])))
+  BSO.plank.ESS$Ile.n[i] <- (BSO.plank.ESS$Ile[i]-mean(as.numeric(BSO.plank.ESS[i,5:10])))
+  BSO.plank.ESS$Phe.n[i] <- (BSO.plank.ESS$Phe[i]-mean(as.numeric(BSO.plank.ESS[i,5:10])))
+  BSO.plank.ESS$Lys.n[i] <- (BSO.plank.ESS$Lys[i]-mean(as.numeric(BSO.plank.ESS[i,5:10])))
+}
+
+BSO.ESS.norm<- BSO.plank.ESS %>%
+  dplyr::select("sample.ID", "year", "location", "study", "Thr.n", "Val.n", "Leu.n", "Ile.n", "Phe.n", "Lys.n")
+
+# combine the dataframes
+BSO.merged<-merge(BSO.plank, BSO.ESS.norm)
+write.csv(BSO.merged, "output/BSO.all.wide.csv")
+
+BSO.ESS.norm.long<-melt(BSO.ESS.norm, idvar= c("sample.ID", "year", "location", "study"))
+
+# rename factors
+BSO.ESS.norm.long <- BSO.ESS.norm.long %>% 
+       dplyr::rename("ESS.norm" = "variable")
+BSO.ESS.norm.long <- BSO.ESS.norm.long %>% 
+       dplyr::rename("d13C" = "value")
+```
+
+
+```{r}
+# combine all normalized data
+# ESVI --> df.ESS.norm.long
+# Wall --> df.ESS.norm.wall.long
+# Mario --> mario.ESS.norm.long
+# Blake --> BSO.ESS.norm.long
+
+# add in  levels for Wall
+df.ESS.norm.wall.long$depth.m<-NA
+df.ESS.norm.wall.long$location<-"Kaneohe.lab"
+df.ESS.norm.wall.long$study<-"Wall 2021"
+df.ESS.norm.wall.long<-df.ESS.norm.wall.long %>% 
+       dplyr::rename("coral.taxa"="species")
+df.ESS.norm.wall.long$depth.bin<-"shallow"
+
+
+# add in levels for ESVI
+df.ESS.norm.long$location<-"Kaneohe.field"
+df.ESS.norm.long$study<-"ESVI"
+df.ESS.norm.long<-df.ESS.norm.long %>% 
+       dplyr::rename("coral.taxa"="species")
+
+# and mario
+mario.ESS.norm.long$study<-"Mario 2024"
+mario.ESS.norm.long$depth.bin<-"shallow"
+mario.ESS.norm.long$depth.m<-NA
+
+#remove plankton here, redundant (in Wall 2021 data)
+mario.ESS.norm.long<-mario.ESS.norm.long[!(mario.ESS.norm.long$sample.ID=="WallPTN"),] 
+mario.ESS.norm.long<-droplevels(mario.ESS.norm.long)
+
+# and Blake
+BSO.ESS.norm.long$coral.taxa<-"Plankton"
+BSO.ESS.norm.long$fraction<-"plank"
+BSO.ESS.norm.long$depth.m<-"1"
+BSO.ESS.norm.long$depth.bin<-"shallow"
+
+# order columns
+df.ESS.n.wall.long <- df.ESS.norm.wall.long[, c("study", "location", "coral.taxa", 
+                                                "sample.ID", "fraction", "depth.m", "depth.bin", "ESS.norm", "d13C")] 
+
+df.ESS.n.long <- df.ESS.norm.long[, c("study", "location", "coral.taxa", 
+                                      "sample.ID", "fraction", "depth.m", "depth.bin", "ESS.norm", "d13C")] 
+
+mario.ESS.n <- mario.ESS.norm.long[, c("study", "location", "coral.taxa", 
+                                       "sample.ID", "fraction", "depth.m", "depth.bin", "ESS.norm", "d13C")] 
+BSO.ESS.n<-BSO.ESS.norm.long[, c("study", "location", "coral.taxa", 
+                                       "sample.ID", "fraction", "depth.m", "depth.bin", "ESS.norm", "d13C")]
+
+# combine all the data
+comb.df<- rbind(df.ESS.n.wall.long, df.ESS.n.long, mario.ESS.n, BSO.ESS.n)
+
+# remove pocillopora
+comb.df.MC<-comb.df[!(comb.df$coral.taxa=="Pocillopora"),]
+comb.df.MC$depth.bin<-factor(comb.df.MC$depth.bin, levels=c("shallow", "intermediate", "deep",""))
+
+# format metadata
+make.fac<-c("study", "location", "coral.taxa", "sample.ID", "fraction", "depth.bin", "ESS.norm")
+comb.df.MC[make.fac]<-lapply(comb.df.MC[make.fac], factor) # make all these factors
+
+ESSbox.comb<-ggplot(comb.df.MC, aes(x=ESS.norm, y=d13C, fill=depth.bin, color=fraction))+
+  geom_boxplot(alpha=0.7)+
+  scale_fill_manual(values=c("gray90", "gray70", "gray30", "cornflowerblue"))+ 
+  scale_color_manual(values=c("black", "mediumseagreen", "cornflowerblue")) +
+  ylim(-12,15)+
+  ylab(expression(paste("AA  ", delta^{13}, C, " (\u2030)"))) +
+  xlab("Amino Acids") +
+  theme_classic()
+
+ESSbox.comb
+## 
+dev.copy(pdf, "figures/ESSbox.comb.pdf", width = 9, height = 7, encod="MacRoman")
+dev.off()
+```
+
+```{r PCA}
+PCA.dat<-comb.df.MC
+PCA.dat<-PCA.dat %>% dplyr::select(-depth.m)
+
+PCA.dat.wide<-reshape(PCA.dat, idvar= c("study", "location", "coral.taxa", "sample.ID", "fraction", "depth.bin"), timevar="ESS.norm", direction='wide')
+
+df.PCA.dat<-PCA.dat.wide %>% dplyr::select("d13C.Thr.n", "d13C.Val.n", "d13C.Leu.n", "d13C.Ile.n", "d13C.Phe.n", "d13C.Lys.n")
+
+# run the PCA on scaled and centered data
+set.seed(508)
+PC.norm<- prcomp(df.PCA.dat, center = TRUE, scale= TRUE) 
+
+PC.norm.summ<-summary(PC.norm) # 75% variation
+plot(PC.norm, type="lines", main="PC.area eigenvalues")
+
+
+###### plot for PCA 
+
+## PC1 and PC2 by group and depth
+PC.norm.plot <- ggbiplot(PC.norm, choices = 1:2, obs.scale = 1, var.scale = 1, 
+                      groups=PCA.dat.wide$fraction,
+                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95) +
+  geom_point(aes(shape=PCA.dat.wide$depth.bin, color=PCA.dat.wide$fraction), size = 2.5) +
+  geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
+  geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
+  scale_x_continuous(breaks=pretty_breaks(n=5))+
+  #scale_color_manual(values=phy.5.colors)+
+  scale_shape_manual(values=c(16,17,2))+
+  ggtitle("ESS-normalized")+
+   theme_classic()+
+   theme(legend.text=element_text(size=10), 
+    panel.background = element_rect(colour = "black", linewidth=1),
+    legend.key = element_rect(color=NA, fill=NA),
+    axis.ticks.length=unit(0.2, "cm"), 
+    axis.text.y=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")),
+    axis.text.x=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
+
+
+## PC1 and PC2
+PC.norm.study <- ggbiplot(PC.norm, choices = 1:2, obs.scale = 1, var.scale = 1, 
+                      groups=PCA.dat.wide$fraction,
+                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95) +
+  geom_point(aes(shape=PCA.dat.wide$study, color=PCA.dat.wide$fraction), size = 2.5) +
+  geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
+  geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
+  scale_x_continuous(breaks=pretty_breaks(n=5))+
+  #scale_color_manual(values=phy.5.colors)+
+  scale_shape_manual(values=c(12,2,17, 16))+
+  ggtitle("ESS-normalized")+
+   theme_classic()+
+   theme(legend.text=element_text(size=10), 
+    panel.background = element_rect(colour = "black", linewidth=1),
+    legend.key = element_rect(color=NA, fill=NA),
+    axis.ticks.length=unit(0.2, "cm"), 
+    axis.text.y=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")),
+    axis.text.x=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
+
+## compile
+grid.arrange(PC.norm.plot, PC.norm.study)
+dev.copy(pdf, "figures/PCA.MC.all.pdf", width = 7, height = 10, encod="MacRoman")
+dev.off()
+```
+

@@ -1,0 +1,8 @@
+﻿sample.ID,year,location,Classification,sample.time,tow.depth.m,size.fraction.mm,Ala13C,Gly13C,Thr13C,Ser13C,Val13C,Leu13C,Ile13C,Pro13C,Asp13C,Glu13C,Phe13C,Tyr13C,Lys13C,study
+3T1,22-Oct,Oahu,Reef,Dusk,1,>200,-18,-12.25,-10.23,NA,-23.2,-23.12,-17.33,-15.98,-14.22,-10,-20.74,-24.99,-16.19,Stoner-Osborne et al. 
+3T2,22-Oct,Oahu,Reef,Dusk,1,>200,-15.97,-12.1,-12.3,-4.87,-21.87,-23.59,-17.5,-15.34,-16.33,-13.8,-22.54,-22.8,-17.42,Stoner-Osborne et al. 
+MP3,22-Oct,Oahu,Reef,Dusk,1,>200,-18.38,-12.34,-14.12,-7.77,-21.57,-23.04,-17.82,-16.58,-17.33,-14.5,-20.33,-22.13,-16.68,Stoner-Osborne et al. 
+EB2,22-Oct,Oahu,Reef,Dusk,1,>200,-17.64,-14.22,-15.05,-13.97,-25.3,-26.25,-20.85,-18.35,-19.38,-17.37,-24.55,-25.15,-19.8,Stoner-Osborne et al. 
+EB1,22-Oct,Oahu,Reef,Dusk,1,>200,NA,-17.41,-16.46,-7.87,-22.48,-26.12,-20.56,-18.43,-17.71,-14.78,-24.58,-25.01,-20.77,Stoner-Osborne et al. 
+K-Bay 1,22-May,Oahu,Reef,Night,1,>200,-15.91,-12.43,-11.65,-5.02,-22.98,-25,-16.88,-15.15,-14.9,-13.25,-21.28,-25.26,-16.31,Stoner-Osborne et al. 
+K-Bay 2,22-May,Oahu,Reef,Night,1,>200,-16.17,-13.81,-12.01,-6.26,-23.37,-25.03,-17.35,-14.89,-14.57,-13.04,-20.71,-25.39,-15.39,Stoner-Osborne et al. 

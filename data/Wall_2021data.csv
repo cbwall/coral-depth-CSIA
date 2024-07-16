@@ -1,0 +1,209 @@
+species,genotype,tag,tank,feeding,light,treat.int,fraction,sample.ID,analysis.ID,AA,AA.short,d13C
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Alanine,Ala,-15.07127193
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Glycine,Gly,-13.66494253
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Threonine,Thr,-8.147979798
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Serine,Ser,-7.561111111
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Valine,Val,-23.11566667
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Leucine,Leu,-23.71818182
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Isoleucine,Ile,-12.49757576
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Norleucine,Nor,-27.226125
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Proline,Pro,-9.735
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Aspartic acid,Asp,-9.783585859
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Methionine,Met,NA
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Glutamic acid,Glx,-7.517105263
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Phenylalanine,Phe,-20.02070313
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Aminoadipic Acid,Ami,-21.62868056
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Tyrosine,Tyr,-21.74075521
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,host,T5A-HOST,B1V3_Sam7,Lysine,Lys,-12.67463768
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Alanine,Ala,-15.61403509
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Glycine,Gly,-13.49195402
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Threonine,Thr,-11.28888889
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Serine,Ser,-8.251851852
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Valine,Val,-25.13866667
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Leucine,Leu,-25.62969697
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Isoleucine,Ile,-15.43818182
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Norleucine,Nor,-28.19122222
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Proline,Pro,-10.64066667
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Aspartic acid,Asp,-11.33939394
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Methionine,Met,NA
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Glutamic acid,Glx,-9.660526316
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Phenylalanine,Phe,-21.8234375
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Aminoadipic Acid,Ami,-22.17088889
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Tyrosine,Tyr,-22.4375
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,host,T5B-HOST,B1V1_Sam1,Lysine,Lys,-12.20869565
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Alanine,Ala,-14.50109649
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Glycine,Gly,-14.08103448
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Threonine,Thr,-9.963636364
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Serine,Ser,-11.27592593
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Valine,Val,-23.75633333
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Leucine,Leu,-24.87181818
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Isoleucine,Ile,-13.28318182
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Norleucine,Nor,-27.78070833
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Proline,Pro,-10.85566667
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Aspartic acid,Asp,-11.56136364
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Methionine,Met,NA
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Glutamic acid,Glx,-8.284210526
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Phenylalanine,Phe,-18.23359375
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Aminoadipic Acid,Ami,-19.98616667
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Tyrosine,Tyr,-18.98554688
+M.capitata,A,91,6,Feed,Ambient,L-F,host,T6A-HOST,B2V6_Sam6,Lysine,Lys,-10.32826087
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Alanine,Ala,-16.52105263
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Glycine,Gly,-15.94482759
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Threonine,Thr,-14.11212121
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Serine,Ser,-9.733333333
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Valine,Val,-25.826
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Leucine,Leu,-25.76484848
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Isoleucine,Ile,-15.71333333
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Norleucine,Nor,-27.23605556
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Proline,Pro,-10.99733333
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Aspartic acid,Asp,-10.35555556
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Methionine,Met,NA
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Glutamic acid,Glx,-9.378947368
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Phenylalanine,Phe,-20.43125
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Aminoadipic Acid,Ami,-20.37911111
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Tyrosine,Tyr,-20.62760417
+M.capitata,B,92,6,Feed,Ambient,L-F,host,T6B-HOST,B2V1_Sam1,Lysine,Lys,-11.64275362
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Alanine,Ala,-14.83355263
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Glycine,Gly,-12.11436782
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Threonine,Thr,-7.601515152
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Serine,Ser,-7.200617284
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Valine,Val,-22.42633333
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Leucine,Leu,-23.10606061
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Isoleucine,Ile,-12.93272727
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Norleucine,Nor,-27.31718056
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Proline,Pro,-9.427
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Aspartic acid,Asp,-9.093686869
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Methionine,Met,NA
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Glutamic acid,Glx,-6.09254386
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Phenylalanine,Phe,-19.09830729
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Aminoadipic Acid,Ami,-21.279125
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Tyrosine,Tyr,-22.75429688
+M.capitata,A,93,8,Feed,Dark,D-F,host,T8A-HOST,B1V2_Sam3,Lysine,Lys,-11.16956522
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Alanine,Ala,-15.57916667
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Glycine,Gly,-11.33074713
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Threonine,Thr,-12.05580808
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Serine,Ser,-10.76111111
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Valine,Val,-25.288
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Leucine,Leu,-25.06484848
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Isoleucine,Ile,-15.39681818
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Norleucine,Nor,-28.07923611
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Proline,Pro,-10.27083333
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Aspartic acid,Asp,-9.98989899
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Methionine,Met,NA
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Glutamic acid,Glx,-7.72872807
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Phenylalanine,Phe,-20.02929688
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Aminoadipic Acid,Ami,-20.70498611
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Tyrosine,Tyr,-19.91367188
+M.capitata,B,94,8,Feed,Dark,D-F,host,T8B-HOST,B2V2_Sam2,Lysine,Lys,-11.50634058
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Alanine,Ala,-15.40964912
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Glycine,Gly,-15.46551724
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Threonine,Thr,-8.987626263
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Serine,Ser,-9.687962963
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Valine,Val,-24.37733333
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Leucine,Leu,-24.14075758
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Isoleucine,Ile,-13.96575758
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Norleucine,Nor,-28.20008333
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Proline,Pro,-10.42733333
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Aspartic acid,Asp,-8.506313131
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Methionine,Met,NA
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Glutamic acid,Glx,-10.17390351
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Phenylalanine,Phe,-19.31393229
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Aminoadipic Acid,Ami,-21.6545
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Tyrosine,Tyr,-20.98385417
+M.capitata,A,89,5,NoFeed,Ambient,L-NF,symb,T5A-SYMB,B1V5_Sam4,Lysine,Lys,-9.908152174
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Alanine,Ala,-16.97368421
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Glycine,Gly,-18.42988506
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Threonine,Thr,-8.692929293
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Serine,Ser,-10.00123457
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Valine,Val,-26.83933333
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Leucine,Leu,-25.67939394
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Isoleucine,Ile,-16.95636364
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Norleucine,Nor,-28.10505556
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Proline,Pro,-12.70333333
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Aspartic acid,Asp,-8.712121212
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Methionine,Met,NA
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Glutamic acid,Glx,-10.97807018
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Phenylalanine,Phe,-21.53229167
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Aminoadipic Acid,Ami,-21.99977778
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Tyrosine,Tyr,-21.54947917
+M.capitata,B,90,5,NoFeed,Ambient,L-NF,symb,T5B-SYMB,B1V6_Sam6,Lysine,Lys,-12.67826087
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Alanine,Ala,-16.38421053
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Glycine,Gly,-17.94137931
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Threonine,Thr,-7.978535354
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Serine,Ser,-10.71882716
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Valine,Val,-24.96933333
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Leucine,Leu,-24.37590909
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Isoleucine,Ile,-13.99242424
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Norleucine,Nor,-28.28563889
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Proline,Pro,-10.39933333
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Aspartic acid,Asp,-7.384090909
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Methionine,Met,NA
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Glutamic acid,Glx,-10.06425439
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Phenylalanine,Phe,-19.31393229
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Aminoadipic Acid,Ami,-22.0945
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Tyrosine,Tyr,-20.734375
+M.capitata,A,91,6,Feed,Ambient,L-F,symb,T6A-SYMB,B1V4_Sam2,Lysine,Lys,-11.2509058
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Alanine,Ala,-19.74802632
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Glycine,Gly,-22.37729885
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Threonine,Thr,-11.71035354
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Serine,Ser,-9.229320988
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Valine,Val,-27.2615
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Leucine,Leu,-26.20060606
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Isoleucine,Ile,-16.48090909
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Norleucine,Nor,-28.43123611
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Proline,Pro,-14.959
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Aspartic acid,Asp,-10.46414141
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Methionine,Met,NA
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Glutamic acid,Glx,-12.17368421
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Phenylalanine,Phe,-21.49114583
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Aminoadipic Acid,Ami,-22.27997222
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Tyrosine,Tyr,-21.93671875
+M.capitata,B,92,6,Feed,Ambient,L-F,symb,T6B-SYMB,B2V4_Sam4,Lysine,Lys,-13.64945652
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Alanine,Ala,-15.62
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Glycine,Gly,-13.56
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Threonine,Thr,-8.71
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Serine,Ser,-5.36
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Valine,Val,-22.61
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Leucine,Leu,-23.44
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Isoleucine,Ile,-11.59
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Norleucine,Nor,-27.42
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Proline,Pro,-11.27
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Aspartic acid,Asp,-10.07
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Methionine,Met,NA
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Glutamic acid,Glx,-8.72
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Phenylalanine,Phe,-19.69
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Aminoadipic Acid,Ami,-21.29
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Tyrosine,Tyr,-18.25
+M.capitata,A,93,8,Feed,Dark,D-F,symb,T8A-SYMB,B2V3_Sam3,Lysine,Lys,-11.9
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Alanine,Ala,-17.73837719
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Glycine,Gly,-15.70488506
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Threonine,Thr,-11.95580808
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Serine,Ser,-7.313271605
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Valine,Val,-25.54816667
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Leucine,Leu,-25.79090909
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Isoleucine,Ile,-17.53060606
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Norleucine,Nor,-28.36340278
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Proline,Pro,-13.17433333
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Aspartic acid,Asp,-12.16616162
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Methionine,Met,NA
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Glutamic acid,Glx,-10.15438596
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Phenylalanine,Phe,-20.67447917
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Aminoadipic Acid,Ami,-22.38202778
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Tyrosine,Tyr,-20.74036458
+M.capitata,B,94,8,Feed,Dark,D-F,symb,T8B-SYMB,B2V5_Sam5,Lysine,Lys,-13.07264493
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Alanine,Ala,-20.82719298
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Glycine,Gly,-19.48390805
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Threonine,Thr,-17.8959596
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Serine,Ser,-11.02962963
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Valine,Val,-27.19666667
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Leucine,Leu,-27.83515152
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Isoleucine,Ile,-21.81454545
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Norleucine,Nor,-28.52305556
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Proline,Pro,-17.28
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Aspartic acid,Asp,-15.37676768
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Methionine,Met,NA
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Glutamic acid,Glx,-16.1245614
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Phenylalanine,Phe,-24.88385417
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Aminoadipic Acid,Ami,-21.81888889
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Tyrosine,Tyr,-25.22291667
+Plankton,Plank,Plank,Plank,Plank,Plank,Plank,plank,Plank,B1V7_Sam5,Lysine,Lys,-19.3384058
