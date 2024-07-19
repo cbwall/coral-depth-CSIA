@@ -46,7 +46,175 @@ Fig.formatting<-(theme_classic()) +
 
 ```
 
+## Bulk tissue EA analysis
+```{r bulk}
+bulk.df<-read.csv("data/ESVI_bulkEA.csv")
 
+# make a meter column
+bulk.df<- bulk.df %>% 
+  dplyr::mutate(depth.m = depth.ft*0.3048)
+
+bulk.df$depth.bin<-ifelse(bulk.df$depth.ft<7, "shallow",
+                    ifelse(bulk.df$depth.ft>20, "deep", "intermediate"))
+
+bulk.df$depth.bin<-factor(bulk.df$depth.bin, levels=c("shallow", "intermediate", "deep"))
+                    
+
+# format metadata
+make.fac<-c("species", "fraction", "sample.ID")
+bulk.df[make.fac]<-lapply(bulk.df[make.fac], factor) # make all these factors
+
+EA.df<-bulk.df %>%
+  dplyr::select(species, depth.m, depth.bin, fraction, ug.N, d15N, ug.C, d13C, C.N)
+
+# figures
+d13C.bin<-ggplot(EA.df, aes(depth.bin, d13C, fill=fraction)) +
+  facet_wrap(.~species)+
+  geom_boxplot(outlier.size = 0.7, alpha=0.5)+
+  scale_fill_manual(values=c("gray50", "goldenrod")) +
+  ylab(expression(paste(delta^{13}, C, " (\u2030)")))+
+  xlab("depth bin")+ theme_bw() +
+  theme(strip.text = element_text(face = "italic"))
+
+d13C.depth<-ggplot(EA.df, aes(y=d13C, x=depth.m, color=fraction)) +
+  facet_wrap(.~species)+
+  geom_point()+
+  scale_color_manual(values=c("gray50", "goldenrod")) +
+  scale_fill_manual(values=c("gray50", "goldenrod")) +
+  geom_smooth(method=lm, aes(fill=fraction)) +
+  ylab(expression(paste(delta^{13}, C, " (\u2030)")))+
+  xlab("depth (m)")+ theme_bw() +
+  theme(strip.text = element_text(face = "italic"))
+
+MC.d13C.density<- ggplot(EA.df[(EA.df$species=="M.capitata"),] , aes(d13C, fill=fraction)) + 
+  facet_wrap(.~depth.bin)+
+  geom_density(alpha=.5) + 
+  scale_fill_manual(values = c('gray50','goldenrod')) + xlim(-20, -12) + 
+  ggtitle(expression(italic("M. capitata"))) +
+  theme(plot.title = element_text(face = "italic")) +
+  xlab(expression(paste(delta^{13}, C, " (\u2030)"))) + theme_bw()
+
+PC.d13C.density<- ggplot(EA.df[(EA.df$species=="P.compressa"),] , aes(d13C, fill=fraction)) + 
+  facet_wrap(.~depth.bin)+
+  geom_density(alpha=.5) + 
+  scale_fill_manual(values = c('gray50','goldenrod')) + xlim(-20, -12) + 
+  ggtitle(expression(italic("P. compressa"))) +
+  xlab(expression(paste(delta^{13}, C, " (\u2030)"))) + theme_bw()
+
+
+d15N.bin<-ggplot(EA.df, aes(depth.bin, d15N, fill=fraction)) +
+  facet_wrap(.~species)+
+  geom_boxplot(outlier.size = 0.7, alpha=0.5)+
+  scale_fill_manual(values=c("gray50", "seagreen")) +
+  ylab(expression(paste(delta^{15}, N, " (\u2030)")))+
+  xlab("depth bin")+
+  theme(strip.text = element_text(face = "italic")) +theme_bw()
+
+d15N.depth<-ggplot(EA.df, aes(y=d15N, x=depth.m, color=fraction)) +
+  facet_wrap(.~species)+
+  geom_point()+
+  scale_fill_manual(values=c("gray50", "seagreen")) +
+  scale_color_manual(values=c("gray50", "seagreen")) +
+  geom_smooth(method=lm, aes(fill=fraction)) +
+  ylab(expression(paste(delta^{15}, N, " (\u2030)")))+
+  theme(strip.text = element_text(face = "italic")) +
+  xlab("depth (m)")+ theme_bw()
+
+
+ESVI.d13C.d15N<-plot_grid(d13C.bin, d15N.bin, d13C.depth, d15N.depth, nrow=4)
+ESVI.d13C.d15N
+dev.copy(pdf, "figures/ESVI.d13C.d15N.pdf", width = 7, height = 10, encod="MacRoman")
+dev.off()
+
+########
+MC.d15N.density<- ggplot(EA.df[(EA.df$species=="M.capitata"),] , aes(d15N, fill=fraction)) + 
+  facet_wrap(.~depth.bin)+
+  geom_density(alpha=.5) + 
+  scale_fill_manual(values = c('gray50','seagreen')) + xlim(2, 6) +
+  ggtitle(expression(italic("M. capitata"))) +
+  xlab(expression(paste(delta^{15}, N, " (\u2030)"))) + theme_bw()
+
+
+PC.d15N.density<- ggplot(EA.df[(EA.df$species=="P.compressa"),] , aes(d15N, fill=fraction)) + 
+  facet_wrap(.~depth.bin)+
+  geom_density(alpha=.5) + 
+  scale_fill_manual(values = c('gray50','seagreen')) + xlim(2, 7) + 
+  ggtitle(expression(italic("P. compressa"))) +
+  xlab(expression(paste(delta^{15}, N, " (\u2030)"))) + theme_bw()
+
+ESVI.density.d13C.d15N<-plot_grid(MC.d13C.density, PC.d13C.density, MC.d15N.density, PC.d15N.density, nrow=4)
+ESVI.density.d13C.d15N
+dev.copy(pdf, "figures/ESVI.density.d13C.d15N.pdf", width = 7, height = 11, encod="MacRoman")
+dev.off()
+
+```
+
+```{r}
+H.S<-read.csv("data/host.symb.csv")
+# make a meter column
+H.S<- H.S %>% 
+  dplyr::mutate(depth.m = depth.ft*0.3048)
+
+H.S$depth.bin<-ifelse(H.S$depth.ft<7, "shallow",
+                    ifelse(H.S$depth.ft>20, "deep", "intermediate"))
+
+H.S$depth.bin<-factor(H.S$depth.bin, levels=c("shallow", "intermediate", "deep"))
+                    
+
+# format metadata
+make.fac<-c("species", "fraction", "sample.ID")
+H.S[make.fac]<-lapply(H.S[make.fac], factor) # make all these factors
+
+H.S<-H.S %>%
+  dplyr::select(species, depth.m, depth.bin, fraction, d13C.h.s, d15N.h.s)
+
+d13C.HS.depth<-ggplot(H.S, aes(y=d13C.h.s, x=depth.m)) +
+  facet_wrap(.~species)+
+  geom_point()+
+  geom_smooth(method=lm) +
+  ylab(expression(paste(delta^{13}, C-H-S, " (\u2030)")))+
+  xlab("depth (m)")+ theme_bw() +
+  theme(strip.text = element_text(face = "italic"))
+
+d13C.HS.depth<-ggplot(H.S, aes(y=d13C.h.s, x=depth.m)) +
+  facet_wrap(.~species)+
+  geom_point(color="goldenrod4")+
+  geom_smooth(method=lm, fill="gray70", color="gray30") +
+  ylab(expression(paste(delta^{13}, C["H-S"], " (\u2030)")))+
+  xlab("depth (m)")+ theme_bw() +
+  theme(strip.text = element_text(face = "italic"))
+
+d13C.HS.bin<-ggplot(H.S, aes(depth.bin, d13C.h.s)) +
+  facet_wrap(.~species)+
+  geom_boxplot(outlier.size = 0.7, alpha=0.5, fill="goldenrod")+
+  ylab(expression(paste(delta^{13}, C["H-S"], " (\u2030)")))+
+  xlab("depth bin")+ theme_bw() +
+  theme(strip.text = element_text(face = "italic"))
+
+d15N.HS.depth<-ggplot(H.S, aes(y=d15N.h.s, x=depth.m)) +
+  facet_wrap(.~species)+
+  geom_point(color="seagreen")+
+  geom_smooth(method=lm, fill="gray70", color="gray30") +
+  ylab(expression(paste(delta^{15}, N["H-S"], " (\u2030)")))+
+  xlab("depth (m)")+ theme_bw() +
+  theme(strip.text = element_text(face = "italic"))
+
+d15N.HS.bin<-ggplot(H.S, aes(depth.bin, d15N.h.s)) +
+  facet_wrap(.~species)+
+  geom_boxplot(outlier.size = 0.7, alpha=0.5, fill="seagreen")+
+  ylab(expression(paste(delta^{15}, N["H-S"], " (\u2030)")))+
+  xlab("depth bin")+ theme_bw() +
+  theme(strip.text = element_text(face = "italic"))
+
+
+ESVI.H.S<-plot_grid(d13C.HS.depth, d15N.HS.depth, d13C.HS.bin, d15N.HS.bin, nrow=4)
+ESVI.H.S
+dev.copy(pdf, "figures/ESVI.H.S.pdf", width = 6, height = 10, encod="MacRoman")
+dev.off()
+
+```
+
+## Amino acid isotope analysis
 ```{r data measured AAs}
 df<-read.csv("data/CSIA samples.csv")
 
@@ -488,6 +656,10 @@ PCA.dat<-PCA.dat %>% dplyr::select(-depth.m)
 
 PCA.dat.wide<-reshape(PCA.dat, idvar= c("study", "location", "coral.taxa", "sample.ID", "fraction", "depth.bin"), timevar="ESS.norm", direction='wide')
 
+PCA.dat.wide$light.depth<-ifelse(PCA.dat.wide$fraction== "host" & PCA.dat.wide$depth.bin=="shallow", "high.light",
+                                 ifelse(PCA.dat.wide$fraction== "symb" & PCA.dat.wide$depth.bin=="shallow", "high.light",
+                                ifelse(PCA.dat.wide$fraction== "plank", "Plankton", "low.light")))
+
 df.PCA.dat<-PCA.dat.wide %>% dplyr::select("d13C.Thr.n", "d13C.Val.n", "d13C.Leu.n", "d13C.Ile.n", "d13C.Phe.n", "d13C.Lys.n")
 
 # run the PCA on scaled and centered data
@@ -522,14 +694,14 @@ PC.norm.plot <- ggbiplot(PC.norm, choices = 1:2, obs.scale = 1, var.scale = 1,
 
 ## PC1 and PC2
 PC.norm.study <- ggbiplot(PC.norm, choices = 1:2, obs.scale = 1, var.scale = 1, 
-                      groups=PCA.dat.wide$fraction,
+                      groups=PCA.dat.wide$light.depth,
                       ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95) +
-  geom_point(aes(shape=PCA.dat.wide$study, color=PCA.dat.wide$fraction), size = 2.5) +
+  geom_point(aes(shape=PCA.dat.wide$fraction, color=PCA.dat.wide$light.depth), size = 2.5) +
   geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
   geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
   scale_x_continuous(breaks=pretty_breaks(n=5))+
   #scale_color_manual(values=phy.5.colors)+
-  scale_shape_manual(values=c(12,2,17, 16))+
+  scale_shape_manual(values=c(16,1,12))+
   ggtitle("ESS-normalized")+
    theme_classic()+
    theme(legend.text=element_text(size=10), 
