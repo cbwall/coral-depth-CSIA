@@ -149,12 +149,12 @@ dev.off()
 
 ```
 
-```{r}
-d13C.CN<-ggplot(EA.df, aes(y=d13C, x=C.N, color=fraction)) +
+```{r CN}
+d13C.CN.bin<-ggplot(EA.df, aes(y=d13C, x=C.N, color=fraction)) +
   facet_wrap(.~species)+
-  geom_point(aes(shape=depth.bin))+
-  scale_color_manual(values=c("coral", "gray50")) +
-  scale_fill_manual(values=c("coral", "gray50")) +
+  geom_point(aes(shape=depth.bin), size=2.5)+
+  scale_color_manual(values=c("skyblue2", "gray50")) +
+  scale_fill_manual(values=c("skyblue3", "gray50")) +
   geom_smooth(method=lm, aes(fill=fraction)) +
   ylab(expression(paste(delta^{13}, C, " (\u2030)")))+
   xlab("C:N")+ theme_bw() +
@@ -162,13 +162,19 @@ d13C.CN<-ggplot(EA.df, aes(y=d13C, x=C.N, color=fraction)) +
 
 d13C.CN<-ggplot(EA.df, aes(y=C.N, x=depth.m, color=fraction)) +
   facet_wrap(.~species)+
-  geom_point()+
-  scale_color_manual(values=c("coral", "gray50")) +
-  scale_fill_manual(values=c("coral", "gray50")) +
+  geom_point(size=2.5)+
+  scale_color_manual(values=c("skyblue2", "gray50")) +
+  scale_fill_manual(values=c("skyblue2", "gray50")) +
   geom_smooth(method=lm, aes(fill=fraction)) +
   ylab("C:N values")+
   xlab("depth (m)")+ theme_bw() +
   theme(strip.text = element_text(face = "italic"))
+
+CN.d13C.depth<-plot_grid(d13C.CN.bin, d13C.CN, nrow=1)
+CN.d13C.depth
+dev.copy(pdf, "figures/CN.d13C.depth.pdf", width = 12, height = 5, encod="MacRoman")
+dev.off()
+
 ```
 
 ```{r}

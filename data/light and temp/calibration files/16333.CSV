@@ -1,0 +1,16 @@
+﻿Site Name ,CRL
+Site Number ,1
+Logger ,Integrating Light Sensor
+Logger Serial Number ,16333
+
+
+Scan No ,Date and Time,       Integrating Light,        ,
+        ,        ,RAW VALUE ,CALIBRATED VALUE,
+
+1,14/06/2024 , 10:25:00,10608,1037
+2,14/06/2024 , 10:35:00,10630,1039.2
+3,14/06/2024 , 10:45:00,10649,1041
+4,14/06/2024 , 10:55:00,10667,1042.8
+5,14/06/2024 , 11:05:00,10674,1043.5
+6,14/06/2024 , 11:15:00,10673,1043.4
+7,14/06/2024 , 11:25:00,10675,1043.6
