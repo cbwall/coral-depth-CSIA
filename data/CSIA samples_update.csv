@@ -1,0 +1,353 @@
+species,batch.ID,batch,glass.tube.ID,coral.ID,sample.ID,depth.ft,fraction,AA,AA.short,d13C
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Alanine,Ala,-15.27
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Glycine,Gly,-5.89
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Threonine,Thr,-10.49
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Serine,Ser,-14.7
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Valine,Val,-24.35
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Leucine,Leu,-27.15
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Ileleucine,Ile,-14.69
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Norleucine,Nor,-28.45
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Proline,Pro,-10.92
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Aspartic acid,Asp,-12.48
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Methionine,Met,-12.84
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Glxtamic acid,Glx,-13.57
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Phenylalanine,Phe,-24.67
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Aminoadipic Acid,Ami,-13.73
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Tyrosine,Tyr,-20.29
+M.capitata,Martinez.J1.S1.host,J1,1H,MC1,MC1.H,1,host,Lysine,Lys,-13.81
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Alanine,Ala,-11.75
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Glycine,Gly,-6.59
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Threonine,Thr,-8.24
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Serine,Ser,-10.25
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Valine,Val,-21.38
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Leucine,Leu,-25.22
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Ileleucine,Ile,-11.19
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Norleucine,Nor,-28.31
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Proline,Pro,-9.23
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Aspartic acid,Asp,-8.97
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Methionine,Met,-12.23
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Glxtamic acid,Glx,-11.91
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Phenylalanine,Phe,-23.49
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Aminoadipic Acid,Ami,-14.52
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Tyrosine,Tyr,NA
+M.capitata,Martinez.J1.S2.host,J1,2H,MC2,MC2.H,2,host,Lysine,Lys,-12.18
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Alanine,Ala,-15.09
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Glycine,Gly,-9.37
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Threonine,Thr,-10
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Serine,Ser,-9.38
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Valine,Val,-23.23
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Leucine,Leu,-27.5
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Ileleucine,Ile,-13.56
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Norleucine,Nor,-28.74
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Proline,Pro,-12.15
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Aspartic acid,Asp,-14.75
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Methionine,Met,-14.34
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Glxtamic acid,Glx,-14.66
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Phenylalanine,Phe,-25.49
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Aminoadipic Acid,Ami,-13.32
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Tyrosine,Tyr,NA
+M.capitata,Martinez.J1.S3.host,J1,3H,MC8,MC8.H,15,host,Lysine,Lys,-19.65
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Alanine,Ala,-13.45
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Glycine,Gly,-10.16
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Threonine,Thr,-9.34
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Serine,Ser,-8.91
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Valine,Val,-23.1
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Leucine,Leu,-27.6
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Ileleucine,Ile,-14.83
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Norleucine,Nor,-28.94
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Proline,Pro,-12.19
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Aspartic acid,Asp,-14.52
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Methionine,Met,-15.69
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Glxtamic acid,Glx,-14.33
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Phenylalanine,Phe,-25.8
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Aminoadipic Acid,Ami,-12.47
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Tyrosine,Tyr,-23.36
+M.capitata,Martinez.J1.S4.host,J1,4H,MC9,MC9.H,15,host,Lysine,Lys,-18.85
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Alanine,Ala,-15.7
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Glycine,Gly,-11.4
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Threonine,Thr,-11.35
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Serine,Ser,-15
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Valine,Val,-22.73
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Leucine,Leu,-28.7
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Ileleucine,Ile,-14.32
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Norleucine,Nor,-30.52
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Proline,Pro,-13.99
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Aspartic acid,Asp,-17
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Methionine,Met,-13.97
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Glxtamic acid,Glx,-15.97
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Phenylalanine,Phe,-26.05
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Aminoadipic Acid,Ami,-12.57
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Tyrosine,Tyr,-25.04
+M.capitata,Martinez.J1.S6.host,J1,6H,MC12,MC12.H,35,host,Lysine,Lys,-18.66
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Alanine,Ala,-16.11
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Glycine,Gly,-7.23
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Threonine,Thr,-10.4
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Serine,Ser,-9.04
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Valine,Val,-23.65
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Leucine,Leu,-28.09
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Ileleucine,Ile,-13.74
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Norleucine,Nor,-29.94
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Proline,Pro,-12.92
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Aspartic acid,Asp,-15.41
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Methionine,Met,-16.21
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Glxtamic acid,Glx,-15.99
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Phenylalanine,Phe,-25.68
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Aminoadipic Acid,Ami,-13.29
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Tyrosine,Tyr,-23.37
+M.capitata,Martinez.J1.S7.host,J1,7H,MC15,MC15.H,33,host,Lysine,Lys,-18.96
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Alanine,Ala,-16.86
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Glycine,Gly,-13.6
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Threonine,Thr,-10.84
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Serine,Ser,-11.16
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Valine,Val,-25.37
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Leucine,Leu,-27.63
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Ileleucine,Ile,-15.55
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Norleucine,Nor,-28.34
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Proline,Pro,-13.31
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Aspartic acid,Asp,-16.29
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Methionine,Met,-15.29
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Glxtamic acid,Glx,-14.78
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Phenylalanine,Phe,-24.93
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Aminoadipic Acid,Ami,-12.59
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Tyrosine,Tyr,-20.55
+M.capitata,Martinez.J1.S8.symb,J1,8S,MC15,MC15.S,33,symb,Lysine,Lys,-19.54
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Alanine,Ala,-13.95
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Glycine,Gly,-6.42
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Threonine,Thr,-3.44
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Serine,Ser,-8.76
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Valine,Val,-22.44
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Leucine,Leu,-24.93
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Ileleucine,Ile,-9.64
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Norleucine,Nor,-28.1
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Proline,Pro,-11.65
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Aspartic acid,Asp,-9.54
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Methionine,Met,-12.05
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Glxtamic acid,Glx,-12.47
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Phenylalanine,Phe,-22.58
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Aminoadipic Acid,Ami,-12.73
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Tyrosine,Tyr,-21.04
+M.capitata,Wall.B1.S2.symb,B1,2S,MC4,MC4.S,3,symb,Lysine,Lys,-12.99
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Alanine,Ala,-13.09
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Glycine,Gly,-6.94
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Threonine,Thr,-3.38
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Serine,Ser,-9.44
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Valine,Val,-24.17
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Leucine,Leu,-25.61
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Ileleucine,Ile,-14.5
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Norleucine,Nor,-28.27
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Proline,Pro,-12.54
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Aspartic acid,Asp,-10.12
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Methionine,Met,-11.62
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Glxtamic acid,Glx,-13.72
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Phenylalanine,Phe,-24.4
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Aminoadipic Acid,Ami,-12.85
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Tyrosine,Tyr,-21.7
+M.capitata,Wall.B1.S3.symb,B1,3S,MC9,MC9.S,15,symb,Lysine,Lys,-14.91
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Alanine,Ala,-14.78
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Glycine,Gly,-10.49
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Threonine,Thr,-7.71
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Serine,Ser,-12.72
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Valine,Val,-24.97
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Leucine,Leu,-27.31
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Ileleucine,Ile,-14.02
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Norleucine,Nor,-29.56
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Proline,Pro,-13.07
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Aspartic acid,Asp,-14.17
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Methionine,Met,-13.84
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Glxtamic acid,Glx,-14.91
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Phenylalanine,Phe,-25.37
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Aminoadipic Acid,Ami,-12.6
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Tyrosine,Tyr,-22.39
+M.capitata,Wall.B1.S4.symb,B1,4S,MC12,MC12.S,35,symb,Lysine,Lys,-16.53
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Alanine,Ala,-16.56
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Glycine,Gly,-12.94
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Threonine,Thr,-7.91
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Serine,Ser,-8.87
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Valine,Val,-26.97
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Leucine,Leu,-26.9
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Ileleucine,Ile,-13.97
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Norleucine,Nor,-28.26
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Proline,Pro,-13.72
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Aspartic acid,Asp,-13.24
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Methionine,Met,-16.31
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Glxtamic acid,Glx,-12.7
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Phenylalanine,Phe,-22.24
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Aminoadipic Acid,Ami,-12.05
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Tyrosine,Tyr,-22.78
+M.capitata,Wall.B1.S5.symb,B1,5S,MC13,MC13.S,26,symb,Lysine,Lys,-14.28
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Alanine,Ala,-15.37
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Glycine,Gly,-12.45
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Threonine,Thr,-9.31
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Serine,Ser,-9.76
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Valine,Val,-25.78
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Leucine,Leu,-26.6
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Ileleucine,Ile,-14.08
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Norleucine,Nor,-27.95
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Proline,Pro,-13.2
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Aspartic acid,Asp,-13.91
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Methionine,Met,-17.17
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Glxtamic acid,Glx,-12.13
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Phenylalanine,Phe,-22.86
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Aminoadipic Acid,Ami,-12.75
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Tyrosine,Tyr,-22.07
+M.capitata,Wall.B1.S8.symb,B1,8S,MC7,MC7.S,16,symb,Lysine,Lys,-13.8
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Alanine,Ala,-17.83
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Glycine,Gly,-12.97
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Threonine,Thr,-9.54
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Serine,Ser,-10.48
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Valine,Val,-26.1
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Leucine,Leu,-24.89
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Ileleucine,Ile,-17.45
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Norleucine,Nor,-28.3
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Proline,Pro,-13.27
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Aspartic acid,Asp,-15.25
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Methionine,Met,-18.21
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Glxtamic acid,Glx,-13.01
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Phenylalanine,Phe,-22.49
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Aminoadipic Acid,Ami,-13.02
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Tyrosine,Tyr,-21.29
+M.capitata,Wall.B1.S1.symb,B1,1S,MC1,MC1.S,1,symb,Lysine,Lys,-12.32
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Alanine,Ala,-16.26
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Glycine,Gly,-10.43
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Threonine,Thr,-8.36
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Serine,Ser,-6.99
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Valine,Val,-23.37
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Leucine,Leu,-27.08
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Ileleucine,Ile,-13.72
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Norleucine,Nor,-28.8
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Proline,Pro,-12.69
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Aspartic acid,Asp,-13.96
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Methionine,Met,NA
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Glxtamic acid,Glx,-12.82
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Phenylalanine,Phe,-23.74
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Aminoadipic Acid,Ami,-11.5
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Tyrosine,Tyr,NA
+M.capitata,Wall.B1.S6.host,B1,6H,MC11,MC11.H,28,host,Lysine,Lys,-13.44
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Alanine,Ala,-14.03
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Glycine,Gly,-10.41
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Threonine,Thr,-6.64
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Serine,Ser,-7.55
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Valine,Val,-21.25
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Leucine,Leu,-26.13
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Ileleucine,Ile,-11.54
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Norleucine,Nor,-28.51
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Proline,Pro,-11.08
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Aspartic acid,Asp,-11.72
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Methionine,Met,NA
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Glxtamic acid,Glx,-9.77
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Phenylalanine,Phe,-22.48
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Aminoadipic Acid,Ami,-11.19
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Tyrosine,Tyr,NA
+M.capitata,Wall.B1.S7.host,B1,7H,MC7,MC7.H,16,host,Lysine,Lys,-11.76
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Alanine,Ala,-15.33
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Glycine,Gly,-14.75
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Threonine,Thr,-8.03
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Serine,Ser,-4.43
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Valine,Val,-22.57
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Leucine,Leu,-25.39
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Ileleucine,Ile,-13.97
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Norleucine,Nor,-28.51
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Proline,Pro,NA
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Aspartic acid,Asp,-13.1
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Methionine,Met,-16.3
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Glxtamic acid,Glx,-11
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Phenylalanine,Phe,-22.29
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Aminoadipic Acid,Ami,-12.78
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Tyrosine,Tyr,-20.02
+M.capitata,Wall.B2.S4.host,B2,4H,MC4,MC4.H,3,host,Lysine,Lys,-15.53
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Alanine,Ala,-14.02
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Glycine,Gly,-15.19
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Threonine,Thr,-6.9
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Serine,Ser,-4.72
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Valine,Val,-23.45
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Leucine,Leu,-23.47
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Ileleucine,Ile,-11.49
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Norleucine,Nor,-28.56
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Proline,Pro,NA
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Aspartic acid,Asp,-12.06
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Methionine,Met,-14.54
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Glxtamic acid,Glx,-8.29
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Phenylalanine,Phe,-20.52
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Aminoadipic Acid,Ami,-12.21
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Tyrosine,Tyr,-20.26
+M.capitata,Wall.B2.S5.symb,B2,5S,MC5,MC5.S,3,symb,Lysine,Lys,-19.65
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Alanine,Ala,-11.91
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Glycine,Gly,-14.13
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Threonine,Thr,-3.66
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Serine,Ser,-2.14
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Valine,Val,-20.79
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Leucine,Leu,-22.71
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Ileleucine,Ile,-8.81
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Norleucine,Nor,-27.94
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Proline,Pro,NA
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Aspartic acid,Asp,-11.2
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Methionine,Met,-14.41
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Glxtamic acid,Glx,-8.93
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Phenylalanine,Phe,-19.84
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Aminoadipic Acid,Ami,-12.58
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Tyrosine,Tyr,-18.31
+M.capitata,Wall.B2.S6.host,B2,6H,MC5,MC5.H,3,host,Lysine,Lys,-12.55
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Alanine,Ala,-16.01
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Glycine,Gly,-14.37
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Threonine,Thr,-10.88
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Serine,Ser,-6.12
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Valine,Val,-23.56
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Leucine,Leu,-26.47
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Ileleucine,Ile,-15.33
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Norleucine,Nor,-27.89
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Proline,Pro,NA
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Aspartic acid,Asp,-14.43
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Methionine,Met,-19.43
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Glxtamic acid,Glx,-11.9
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Phenylalanine,Phe,-23.17
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Aminoadipic Acid,Ami,-13.03
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Tyrosine,Tyr,-22.95
+M.capitata,Wall.B2.S7.B.symb,B2,7S,MC8,MC8.S,15,symb,Lysine,Lys,-17.76
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Alanine,Ala,-16.28
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Glycine,Gly,-14.68
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Threonine,Thr,-9.1
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Serine,Ser,-4.42
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Valine,Val,-23.54
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Leucine,Leu,-25.93
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Ileleucine,Ile,-14.09
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Norleucine,Nor,-28
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Proline,Pro,NA
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Aspartic acid,Asp,-13.89
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Methionine,Met,-19.57
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Glxtamic acid,Glx,-11.33
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Phenylalanine,Phe,-22.04
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Aminoadipic Acid,Ami,-12.71
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Tyrosine,Tyr,-19.72
+M.capitata,Wall.B2.S2.symb,B2,2S,MC14,MC14.S,35,symb,Lysine,Lys,-16.9
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Alanine,Ala,-11.7
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Glycine,Gly,-12.87
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Threonine,Thr,-6.26
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Serine,Ser,-3.39
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Valine,Val,-20.48
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Leucine,Leu,-22.87
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Ileleucine,Ile,-10.74
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Norleucine,Nor,-28.63
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Proline,Pro,NA
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Aspartic acid,Asp,-11.17
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Methionine,Met,-15.63
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Glxtamic acid,Glx,-8.3
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Phenylalanine,Phe,-19.85
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Aminoadipic Acid,Ami,-12.04
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Tyrosine,Tyr,-18.99
+M.capitata,Wall.B2.S3.symb,B2,3S,MC2,MC2.S,2,symb,Lysine,Lys,-14.18
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Alanine,Ala,-13.67
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Glycine,Gly,-16.41
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Threonine,Thr,-7.43
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Serine,Ser,-4.79
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Valine,Val,-20.47
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Leucine,Leu,-25.54
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Ileleucine,Ile,-15.61
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Norleucine,Nor,-29.64
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Proline,Pro,NA
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Aspartic acid,Asp,-14.68
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Methionine,Met,-18.83
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Glxtamic acid,Glx,-11.79
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Phenylalanine,Phe,-23.17
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Aminoadipic Acid,Ami,-14.03
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Tyrosine,Tyr,-19.97
+M.capitata,Wall.B2.S1.host,B2,1H,MC14,MC14.H,35,host,Lysine,Lys,-16.78

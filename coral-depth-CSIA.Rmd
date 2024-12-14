@@ -23,8 +23,10 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.align='center')
 if (!require("pacman")) install.packages("pacman") # for rapid install if not in library
 
 # use pacman to load all the packages you are missing!
-pacman::p_load('knitr', 'lme4', 'lmerTest', 'tidyverse', 'effects', 'plyr', 'dplyr', 'plotrix', 'car',"gridExtra", "cowplot", "tools", "mgcv", "gratia", "MASS", "stats", "tidymv", "sjstats", "coin", "emmeans", "ggplot2", "mda", "nortest", "reshape2", "gmm", "propagate","ggmap", "RgoogleMaps", "MixSIAR","GGally", "ggbiplot", "ggcorrplot", "vegan", "pairwiseAdonis")
+pacman::p_load('knitr', 'lme4', 'lmerTest', 'tidyverse', 'effects', 'plyr', 'dplyr', 'plotrix', 'car',"gridExtra", "cowplot", "tools", "mgcv", "gratia", "MASS", "stats", "tidymv", "sjstats", "coin", "emmeans", "ggplot2", "mda", "nortest", "reshape2", "gmm", "propagate","ggmap", "RgoogleMaps", "MixSIAR","GGally", "ggbiplot", "ggcorrplot", "vegan", "pairwiseAdonis", "lubridate", "zoo", "plotrix")
 
+
+rm(list=ls()) 
 
 ### general formatting for figures 
 Fig.formatting<-(theme_classic()) +
@@ -34,17 +36,230 @@ Fig.formatting<-(theme_classic()) +
         legend.text=element_text(size=10),
         #legend.title = element_blank(),
         panel.border = element_rect(fill=NA, colour = "black", linewidth =1),
-        aspect.ratio=1, 
         axis.ticks.length=unit(0.25, "cm"),
         axis.text.y=element_text(
           margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm"), colour="black", size=10), 
         axis.text.x=element_text(
-          margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm"), colour="black", size=8)) +
+          margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm"), colour="black", size=10)) +
   theme(legend.key.size = unit(0.4, "cm")) +
-  theme(aspect.ratio=1.3) +
   theme(panel.spacing=unit(c(0, 0, 0, 0), "cm"))
 
 ```
+
+## Environmental data
+```{r}
+
+#PAR -- Odyssey: shallow 2' = SN16333, intermediate 10' = SN16321, deep 22' = SN16315
+#Temp -- Hobo: shallow 2' = 21556322, intermediate 10' = 21556332, deep 22' = 20970121
+
+######## Temp compiling
+# remove all unwanted rows and columns and split date and time column, grab files in a list
+files <- list.files(path="data/environmental/temp", pattern = "csv$", full.names = T)
+files
+
+##### what are the file names, sans extensions
+file.names<-file_path_sans_ext(list.files(path="data/environmental/temp", pattern = "csv$", full.names = F))
+file.names
+
+############ formatting all data in for loop
+for(i in 1:length(files))
+{
+  data<-read.csv(files[i], header=F, stringsAsFactors=FALSE, sep=",", skip=1)
+  df<-data[c(-1:-2),-1] # removes "trash" columns
+  df<-df[, c(1:2)] # reorganize
+  colnames(df)<-c("Date.time", "Temp")
+  df$Raw.Temp<-as.numeric(as.character(df$Temp))
+  df$timestamp<-mdy_hms(as.character(df$Date.time)) # corrects date format
+  df$timestamp<-strptime(df$timestamp, format="%Y-%m-%d %H:%M:%S")
+  df<- df %>% select(timestamp, Temp) # remove old date-time column
+  df<-df[!(df$timestamp < "2024-06-17 11:00:00 HST"),] # start at this time
+  df<-df[!(df$timestamp > "2024-06-21 10:00:00 HST"),] # end at this time
+  #df$SN<-file.names[i]
+  #df$depth<-ifelse(file.names[i]=="20970121", "deep", "intermediate")
+  #df$Date<-as.Date(df$timestamp)
+  make.names(assign(paste("SN",file.names[i], sep=""), df)) # put pattern at front of names
+}
+# this is the end of the loop
+
+ls()
+files<-as.data.frame(mget(ls(pattern = "SN.*"))) # with SN as patterns in files from for loops
+names(files) # see number of columns, and what these are
+data_index<-c(1,(seq(2,4,2))) # these are the columns we will want: timestamp + raw data **change '18' to number of columns in your dataframe, specifying here to select 'every other column'
+
+temps<-as.data.frame(c(files[, data_index])) # here is the data we want, now in df alone
+colnames(temps)[1]="timestamp" # rename the single column for time
+
+
+########## one logger had longer interval, adjust for this...
+d.temp<-read.csv("data/environmental/temp/interval discrep/21556322.csv", 
+                 header=F, stringsAsFactors=FALSE, sep=",", skip=1)
+  df<-d.temp[c(-1:-2),-1] # removes "trash" columns
+  df<-df[, c(1:2)] # reorganize
+  colnames(df)<-c("Date.time", "SN21556322.Temp")
+  df$SN21556322.Temp<-as.numeric(as.character(df$SN21556322.Temp))
+  df$timestamp<-mdy_hms(as.character(df$Date.time)) # corrects date format
+  df$timestamp<-strptime(df$timestamp, format="%Y-%m-%d %H:%M:%S")
+  df<- df %>% select(timestamp, SN21556322.Temp) # remove old date-time column
+  df<-df[!(df$timestamp < "2024-06-17 11:00:00 HST"),] # start at this time
+  df<-df[!(df$timestamp > "2024-06-21 10:00:00 HST"),] # end at this time
+  df$timestamp<-as.POSIXct(df$timestamp)
+  SN21556322<-df
+
+
+# combine all data based on time, gives hourly values for all loggers
+df.all.temp <- merge(temps, SN21556322, by= "timestamp", na.rm=TRUE)
+df.all.temp<-na.omit(df.all.temp) # remove NA
+write.csv(df.all.temp, "output/Temp_hourly_light.depth.KBay.csv")
+
+# reorganize to 2 columns
+#df.all.temp$Date<-as.Date(df.all.temp$timestamp)
+shal.T<-df.all.temp %>% select(timestamp, SN21556322.Temp); shal.T$depth<-"shallow"; shal.T$SN<-"SN21556322"
+shal.T <- shal.T %>%  dplyr::rename("Temp.C" = "SN21556322.Temp")
+
+inter.T<-df.all.temp %>% select(timestamp, SN21556332.Temp); inter.T$depth<-"intermed"; inter.T$SN<-"SN21556332"
+inter.T <- inter.T %>%  dplyr::rename("Temp.C" = "SN21556332.Temp")
+
+deep.T<-df.all.temp %>% select(timestamp, SN20970121.Temp); deep.T$depth<-"deep"; deep.T$SN<-"SN20970121"
+deep.T <- deep.T %>%  dplyr::rename("Temp.C" = "SN20970121.Temp")
+
+Temp.long<-rbind(shal.T, inter.T, deep.T)
+Temp.long$Date<-as.Date(Temp.long$timestamp)
+Temp.long$Temp.C<-as.numeric(Temp.long$Temp.C)
+Temp.long$depth<-as.factor(Temp.long$depth)
+
+Temp.long$depth<-factor(Temp.long$depth, levels=c("shallow", "intermed", "deep"))
+Temp.long$depth.m<- ifelse(Temp.long$depth=="shallow", "<1m", 
+                          ifelse(Temp.long$depth=="intermed", "3m", "7m"))
+
+############ plot the temp data
+temp.plot<-ggplot(Temp.long, aes(x=timestamp, y=Temp.C, color=depth.m)) + 
+  geom_line(lwd=0.7) + 
+  geom_point(size=1.5) +
+  scale_color_manual(values=c("lightseagreen", "royalblue", "slategray4")) +
+  xlab("Date") +
+  ylab("Hourly Temperature (°C)") +
+  Fig.formatting
+
+temp.plot
+dev.copy(pdf, "figures/Temp.plot.pdf", width = 6, height = 6)
+dev.off()
+```
+
+```{r light data}
+##### grab files in a list
+PAR.files <- list.files(path="data/environmental/light", pattern = "CSV$", full.names = T); PAR.files
+
+##### what are the file names, sans extensions
+file.names<-file_path_sans_ext(list.files(path="data/environmental/light", pattern = "CSV$", full.names = F))
+
+############ formatting all data in for loop
+for(i in 1:length(PAR.files))
+{
+  data<-read.csv(PAR.files[i], sep=",", skip=8)
+  df<-data[, -1] # removes "trash" columns
+  colnames(df)<-c("Date", "Time", "Raw.PAR", "Cal.PAR")
+  df$Date<-dmy(df$Date) # corrects date format
+  df$timestamp<-as.POSIXct(paste(df$Date, df$Time), format="%Y-%m-%d %H:%M:%S")
+  df<- df %>%  dplyr::select(Date, timestamp, Cal.PAR) # timestamp and Raw value only
+  df<-df[!(df$timestamp < "2024-06-17 12:00:00"),] # start at this time
+  df<-df[!(df$timestamp >= "2024-06-21 10:00:00"),] # end at this time
+  make.names(assign(paste("SN.Od",file.names[i], sep=""), df)) # put pattern at front of names
+  # makes each df[i] as dataframe with specific file-name
+  # write.csv(df.out, file=paste("trim",file.names[i])) # makes .csvs for output
+}
+# this is the end of the loop
+
+########## see the files you've made, as a list, then grab those that fill your pattern 
+ls()
+files<-as.data.frame(mget(ls(pattern = "SN.Od.*"))) # with SN as patterns in files from for loops
+names(files) # see number of columns, and what these are
+
+data_index<-c(1:2,(seq(3,9,3))) # these are the columns we will want: timestamp + raw data **change '18' to number of columns in your dataframe, specifying here to select 'every other column'
+
+PAR<-as.data.frame(c(files[, data_index])) # here is the data we want, now in df alone
+names(PAR) = gsub(pattern = "_.*", replacement = "", x = names(PAR)) #strip name to SN only
+colnames(PAR)[1]="Date" # rename the single column for time
+colnames(PAR)[2]="timestamp"
+
+# export
+PAR.export<-PAR
+colnames(PAR.export)<- c("Date", "timestamp", "SN16315.deep", "SN16321.interm", "SN16333.shal")
+write.csv(PAR.export, "output/PAR_light.depth.KBay.csv")
+
+###### change format for ggplotting
+PAR.shal<- PAR.export %>% select("Date", "timestamp", "SN16333.shal") 
+  PAR.shal$depth<-"shallow"; PAR.shal$SN<-"SN16333"; colnames(PAR.shal)[3]<-"PAR"
+PAR.interm<- PAR.export %>% select("Date", "timestamp", "SN16321.interm")
+  PAR.interm$depth<- "intermed" ; PAR.interm$SN<-"SN16321"; colnames(PAR.interm)[3]<-"PAR"
+PAR.deep<- PAR.export %>% select("Date", "timestamp", "SN16315.deep")
+  PAR.deep$depth<-"deep"; PAR.deep$SN<-"SN16315"; colnames(PAR.deep)[3]<-"PAR"
+
+PAR.long<-rbind(PAR.shal, PAR.interm, PAR.deep)
+PAR.long$PAR<-as.numeric(PAR.long$PAR)
+PAR.long$depth<-as.factor(PAR.long$depth)
+PAR.long$depth.m<- ifelse(PAR.long$depth=="shallow", "<1m", 
+                          ifelse(PAR.long$depth=="intermed", "3m", "7m"))
+
+PAR.long$depth<-factor(PAR.long$depth, levels=c("shallow", "intermed", "deep"))
+
+############ plot the PAR data: note unites are umol photons m-2 s-1 at 10 min interval
+PAR.plot<-ggplot(PAR.long, aes(x=timestamp, y=PAR, color=depth.m)) + 
+  geom_line(lwd=0.7) + 
+  geom_point(size=1.5, alpha=0.5) +
+  ylim(0,2000)+
+  scale_color_manual(values=c("coral2", "khaki3", "indianred4")) +
+  xlab("Date") +
+  ylab(expression(paste("PAR", mu,"mol photons", ~m^-2, ~s^-1, sep="")))+
+  Fig.formatting
+
+######### DLI
+df.split <- split(PAR.export, f=PAR.export$timestamp
+                  < as.Date("2024-06-18", format="%F")) # split df by date
+
+# interval is 10min, logging a value at 1 sec. 
+# Calculate as...60s*60m = (3600), *24h day *values /10^6= light over full day. If only "light interval" then specificy # of hours in the day (seasonal specific)
+
+df.dli<-aggregate(data.frame(shal.DLI=df.split[[1]]$SN16333.shal*0.0864,
+                             intermed.DLI=df.split[[1]]$SN16321.interm*0.0864,
+                             deep.DLI=df.split[[1]]$SN16315.deep*0.0864),
+                  by=list(Date=df.split[[1]]$Date), FUN=mean)
+
+df.dli<-df.dli[!(df.dli$Date=="2024-06-17"), ] # remove dates without full 24 h deployment
+df.dli<-df.dli[!(df.dli$Date >="2024-06-21"), ]
+
+
+## combine dataframe
+shall.DLI.df<-df.dli %>% select (Date, shal.DLI); colnames(shall.DLI.df)[2]<- "DLI"
+  shall.DLI.df$depth<- "shallow"
+intermed.DLI.df<-df.dli %>% select (Date, intermed.DLI); colnames(intermed.DLI.df)[2]<- "DLI"
+  intermed.DLI.df$depth<- "intermed"
+deep.DLI.df<-df.dli %>% select (Date, deep.DLI); colnames(deep.DLI.df)[2]<- "DLI"
+   deep.DLI.df$depth<- "deep"
+DLI.bind<-rbind(shall.DLI.df,intermed.DLI.df,deep.DLI.df)
+
+DLI.bind$depth.m<- ifelse(DLI.bind$depth=="shallow", "<1m", 
+                          ifelse(DLI.bind$depth=="intermed", "3m", "7m"))
+
+DLI.bind$depth<-factor(DLI.bind$depth, levels=c("shallow", "intermed", "deep"))
+
+
+############ plot the DLI data: note unites are mole photons m-2 d-1 at 10 min interval
+DLI.plot<-ggplot(DLI.bind, aes(x=depth.m, y=DLI, fill=depth)) + 
+  geom_boxplot(alpha=0.9) +
+  geom_point(size=2, alpha=0.5, aes(fill=depth)) +
+  scale_fill_manual(values=c("coral2", "khaki3", "indianred4")) +
+  xlab("Depth bin") +
+  ylab(expression(paste("DLI (mol photons", ~m^-2, ~d^-1,")", sep="")))+
+  Fig.formatting
+
+env.plots<-plot_grid(temp.plot, PAR.plot, DLI.plot+guides(fill="none"),
+                            ncol=3, nrow=1, rel_widths = c(10,10,6))
+env.plots
+dev.copy(pdf, "figures/Figx.Temp.PAR.DLI.pdf", width = 12, height = 4, encod="MacRoman")
+dev.off()
+
+```
+
 
 ## Bulk tissue EA analysis
 ```{r bulk}
@@ -177,7 +392,7 @@ dev.off()
 
 ```
 
-```{r}
+```{r HS diff}
 H.S<-read.csv("data/host.symb.csv")
 # make a meter column
 H.S<- H.S %>% 
@@ -244,10 +459,10 @@ dev.off()
 
 ## Amino acid isotope analysis
 ```{r data measured AAs}
-df<-read.csv("data/CSIA samples.csv")
+df<-read.csv("data/CSIA samples_update.csv")
 
 # format metadata
-make.fac<-c("species", "coral.ID", "glass.tube.ID", "sample.ID", "fraction", "AA", "AA.short")
+make.fac<-c("species", "batch", "coral.ID", "glass.tube.ID", "sample.ID", "fraction", "AA", "AA.short")
 df[make.fac]<-lapply(df[make.fac], factor) # make all these factors
 
 df$depth.ft<-as.numeric(df$depth.ft)
@@ -257,7 +472,7 @@ df<- df %>%
   dplyr::mutate(depth.m = depth.ft*0.3048)
 
 df$depth.bin<-ifelse(df$depth.ft<7, "shallow",
-                    ifelse(df$depth.ft>30, "deep", "intermediate"))
+                    ifelse(df$depth.ft>17, "deep", "intermediate"))
 
 df$depth.bin<-factor(df$depth.bin, levels=c("shallow", "intermediate", "deep"))
                     
@@ -276,16 +491,17 @@ df$AA.cat<-ifelse(df$AA.short=="Ala" |df$AA.short=="Asp" |
 
 df$AA.short<-factor(df$AA.short, levels=c("Ala","Asp", "Glx", "Gly", "Pro", "Ser", "Tyr", "Ile", "Leu", "Lys", "Phe", "Thr", "Val"))
 
+
 ####### plot by EAA, with groups of sources and consumers
-AAbox<-ggplot(df, aes(x=AA.short, y=d13C, fill=depth.bin, color=fraction))+
-  #geom_jitter(aes(fill=Group), colour="black",pch=21, size=1)+
+AAbox<-ggplot(df, aes(x=AA.short, y=d13C, fill=fraction))+
+  facet_wrap(.~depth.bin)+
   ylim(-30,-3)+
   geom_boxplot(alpha=0.7)+
-  scale_fill_manual(values=c("gray90", "gray50", "gray10"))+ 
-  scale_color_manual(values=c("gray10", "mediumseagreen")) +
-  geom_vline(xintercept=7.5, linetype="solid", color = "gray") +
-  annotate(geom="text", label="Nonessential-AA", x=4, y=-3, color="gray40") +
-  annotate(geom="text", label="Essential-AA", x=10, y=-3, color="gray40") +
+  #scale_fill_manual(values=c("gray90", "gray50", "gray10"))+ 
+  scale_fill_manual(values=c("gray50", "mediumseagreen")) +
+  #geom_vline(xintercept=7.5, linetype="solid", color = "gray") +
+  #annotate(geom="text", label="Nonessential-AA", x=4, y=-3, color="gray40") +
+  #annotate(geom="text", label="Essential-AA", x=10, y=-3, color="gray40") +
   ylab(expression(paste("AA  ", delta^{13}, C, " (\u2030)"))) +
   xlab("Amino Acids") +
   theme_classic()
@@ -297,37 +513,37 @@ AAbox<-ggplot(df, aes(x=AA.short, y=d13C, fill=depth.bin, color=fraction))+
 
 dfESS<-df[(df$AA.cat=="ESS"),]
 dfESS.short<- dfESS %>%
-  dplyr::select(species, coral.ID, glass.tube.ID, sample.ID, fraction, depth.m, depth.bin, AA.short, d13C)
+  dplyr::select(species, coral.ID, batch, glass.tube.ID, sample.ID, fraction, depth.m, depth.bin, AA.short, d13C)
 
 library(reshape2)
-df.ESS.wide<-reshape(dfESS.short, idvar= c("species", "coral.ID", "glass.tube.ID", "sample.ID", "fraction", 
+df.ESS.wide<-reshape(dfESS.short, idvar= c("species", "coral.ID", "batch", "glass.tube.ID", "sample.ID", "fraction", 
                                            "depth.m", "depth.bin"), timevar="AA.short", direction='wide')
 
 dfESS.norm<-df.ESS.wide
-colnames(dfESS.norm)<-c("species", "coral.ID", "glass.tube.ID", "sample.ID", "fraction", "depth.m", "depth.bin",
+colnames(dfESS.norm)<-c("species", "coral.ID", "batch",  "glass.tube.ID", "sample.ID", "fraction", "depth.m", "depth.bin",
                         "Thr", "Val", "Leu", "Ile", "Phe", "Lys")
 
 #make ID column to run the normalization
 dfESS.norm$ID<-1:nrow(dfESS.norm)
 for(i in 1:length(dfESS.norm$ID)){
-  dfESS.norm$Thr.n[i] <- (dfESS.norm$Thr[i]-mean(as.numeric(dfESS.norm[i,8:13])))
-  dfESS.norm$Val.n[i] <- (dfESS.norm$Val[i]-mean(as.numeric(dfESS.norm[i,8:13])))
-  dfESS.norm$Leu.n[i] <- (dfESS.norm$Leu[i]-mean(as.numeric(dfESS.norm[i,8:13])))
-  dfESS.norm$Ile.n[i] <- (dfESS.norm$Ile[i]-mean(as.numeric(dfESS.norm[i,8:13])))
-  dfESS.norm$Phe.n[i] <- (dfESS.norm$Phe[i]-mean(as.numeric(dfESS.norm[i,8:13])))
-  dfESS.norm$Lys.n[i] <- (dfESS.norm$Lys[i]-mean(as.numeric(dfESS.norm[i,8:13])))
+  dfESS.norm$Thr.n[i] <- (dfESS.norm$Thr[i]-mean(as.numeric(dfESS.norm[i,9:14])))
+  dfESS.norm$Val.n[i] <- (dfESS.norm$Val[i]-mean(as.numeric(dfESS.norm[i,9:14])))
+  dfESS.norm$Leu.n[i] <- (dfESS.norm$Leu[i]-mean(as.numeric(dfESS.norm[i,9:14])))
+  dfESS.norm$Ile.n[i] <- (dfESS.norm$Ile[i]-mean(as.numeric(dfESS.norm[i,9:14])))
+  dfESS.norm$Phe.n[i] <- (dfESS.norm$Phe[i]-mean(as.numeric(dfESS.norm[i,9:14])))
+  dfESS.norm$Lys.n[i] <- (dfESS.norm$Lys[i]-mean(as.numeric(dfESS.norm[i,9:14])))
 }
 
 #remove non-norm AAs
 dfESS.only<-dfESS.norm %>%
-  dplyr::select ("species", "coral.ID", "glass.tube.ID", "sample.ID", "fraction", "depth.m", "depth.bin", "Thr.n", "Val.n", "Leu.n", "Ile.n", "Phe.n", "Lys.n")
+  dplyr::select ("species", "coral.ID", "batch", "glass.tube.ID", "sample.ID", "fraction", "depth.m", "depth.bin", "Thr.n", "Val.n", "Leu.n", "Ile.n", "Phe.n", "Lys.n")
 
 
 ## save a wide format version of all data
 df.wide<- df %>%
-  dplyr::select(species, coral.ID, glass.tube.ID, sample.ID, fraction, depth.m, depth.bin, AA.short, d13C)
+  dplyr::select(species, coral.ID, batch, glass.tube.ID, sample.ID, fraction, depth.m, depth.bin, AA.short, d13C)
 
-df.wide<-reshape(df.wide, idvar= c("species", "coral.ID", "glass.tube.ID", "sample.ID", "fraction", "depth.m", "depth.bin"), timevar="AA.short", direction='wide')
+df.wide<-reshape(df.wide, idvar= c("species", "coral.ID", "batch", "glass.tube.ID", "sample.ID", "fraction", "depth.m", "depth.bin"), timevar="AA.short", direction='wide')
 
 ESVI.merge <- merge.data.frame(df.wide, dfESS.only)
 write.csv(ESVI.merge, "output/ESVI.wide.csv")
@@ -355,14 +571,14 @@ df.ESS.norm.long$ESS.norm<-factor(df.ESS.norm.long$ESS.norm,
 ESSbox<-ggplot(df.ESS.norm.long, aes(x=ESS.norm, y=d13C, fill=depth.bin, color=fraction))+
   geom_boxplot(alpha=0.7)+
   scale_fill_manual(values=c("gray90", "gray50", "gray10"))+  
-  scale_color_manual(values=c("gray10", "mediumseagreen")) +
+  scale_color_manual(values=c("gray14", "mediumseagreen")) +
   ylim(-10,10)+
   ylab(expression(paste("AA  ", delta^{13}, C, " (\u2030)"))) +
   xlab("Amino Acids") +
   theme_classic()
 
 ESVI.mc<-grid.arrange(AAbox, ESSbox)
-dev.copy(pdf, "figures/ESVI.MC.box.pdf", width = 9, height = 10, encod="MacRoman")
+dev.copy(pdf, "figures/ESVI.MC.box.pdf", width = 15, height = 10, encod="MacRoman")
 dev.off()
 ```
 
@@ -374,6 +590,14 @@ notwanted.AAs<-c("Met", "Nor", "Ami")
 
 wall.mc<-wall.mc %>% 
   dplyr::filter(!as.factor(AA.short) %in% notwanted.AAs)
+
+wall.mc<-droplevels(wall.mc)
+
+# remove treatments that were modified heavily (dark F/NF)
+notwanted.trts<-c("D-F", "D-NF")
+
+wall.mc<-wall.mc %>% 
+  dplyr::filter(!as.factor(treat.int) %in% notwanted.trts)
 
 wall.mc<-droplevels(wall.mc)
 
@@ -600,7 +824,6 @@ BSO.ESS.norm.long <- BSO.ESS.norm.long %>%
        dplyr::rename("d13C" = "value")
 ```
 
-
 ```{r combine it all}
 # combine all normalized data
 # ESVI --> df.ESS.norm.long
@@ -611,6 +834,7 @@ BSO.ESS.norm.long <- BSO.ESS.norm.long %>%
 # add in  levels for Wall
 df.ESS.norm.wall.long$depth.m<-NA
 df.ESS.norm.wall.long$location<-"Kaneohe.lab"
+df.ESS.norm.wall.long$batch<-"Wall"
 df.ESS.norm.wall.long$study<-"Wall 2021"
 df.ESS.norm.wall.long<-df.ESS.norm.wall.long %>% 
        dplyr::rename("coral.taxa"="species")
@@ -630,6 +854,7 @@ df.ESS.norm.long$light.depth<-ifelse(df.ESS.norm.long$depth.bin== "shallow", "hi
 # and mario
 mario.ESS.norm.long$study<-"Mario 2024"
 mario.ESS.norm.long$depth.bin<-"high.light"
+mario.ESS.norm.long$batch<-"Mario"
 
 mario.ESS.norm.long$depth.m<-NA
 mario.ESS.norm.long$depth.bin<-"shallow"
@@ -645,21 +870,22 @@ mario.ESS.norm.long<-droplevels(mario.ESS.norm.long)
 BSO.ESS.norm.long$coral.taxa<-"Plankton"
 BSO.ESS.norm.long$fraction<-"plank"
 BSO.ESS.norm.long$depth.m<-"1"
+BSO.ESS.norm.long$batch<-"Blake"
 BSO.ESS.norm.long$depth.bin<-"shallow"
 BSO.ESS.norm.long$light.depth<-"Plankton"
 
 
 # order columns
 df.ESS.n.wall.long <- df.ESS.norm.wall.long[, c("study", "location", "coral.taxa", 
-                                         "sample.ID", "fraction", "depth.m", "depth.bin", "light.depth", "ESS.norm", "d13C")] 
+                                         "sample.ID", "batch", "fraction", "depth.m", "depth.bin", "light.depth", "ESS.norm", "d13C")] 
 
 df.ESS.n.long <- df.ESS.norm.long[, c("study", "location", "coral.taxa", 
-                                      "sample.ID", "fraction", "depth.m", "depth.bin", "light.depth", "ESS.norm", "d13C")] 
+                                      "sample.ID",  "batch", "fraction", "depth.m", "depth.bin", "light.depth", "ESS.norm", "d13C")] 
 
 mario.ESS.n <- mario.ESS.norm.long[, c("study", "location", "coral.taxa", 
-                                       "sample.ID", "fraction", "depth.m", "depth.bin", "light.depth", "ESS.norm", "d13C")] 
+                             "sample.ID",  "batch", "fraction", "depth.m", "depth.bin", "light.depth", "ESS.norm", "d13C")] 
 BSO.ESS.n<-BSO.ESS.norm.long[, c("study", "location", "coral.taxa", 
-                                       "sample.ID", "fraction", "depth.m", "depth.bin", "light.depth", "ESS.norm", "d13C")]
+                              "sample.ID",  "batch", "fraction", "depth.m", "depth.bin", "light.depth", "ESS.norm", "d13C")]
 
 # combine all the data
 comb.df<- rbind(df.ESS.n.wall.long, df.ESS.n.long, mario.ESS.n, BSO.ESS.n)
@@ -671,7 +897,7 @@ comb.df.MC<-comb.df[!(comb.df$coral.taxa=="Pocillopora"),]
 comb.df.MC$depth.bin<-factor(comb.df.MC$depth.bin, levels=c("shallow", "intermediate", "deep",""))
 
 # format metadata
-make.fac<-c("study", "location", "coral.taxa", "sample.ID", "fraction", "depth.bin", "ESS.norm")
+make.fac<-c("study", "location", "coral.taxa", "sample.ID", "batch", "fraction", "depth.bin", "ESS.norm")
 comb.df.MC[make.fac]<-lapply(comb.df.MC[make.fac], factor) # make all these factors
 
 ESSbox.comb<-ggplot(comb.df.MC, aes(x=ESS.norm, y=d13C, fill=depth.bin, color=fraction))+
@@ -693,7 +919,7 @@ dev.off()
 PCA.dat<-comb.df.MC
 PCA.dat<-PCA.dat %>% dplyr::select(-depth.m)
 
-PCA.dat.wide<-reshape(PCA.dat, idvar= c("study", "location", "coral.taxa", "sample.ID", "fraction", "depth.bin", "light.depth"), timevar="ESS.norm", direction='wide')
+PCA.dat.wide<-reshape(PCA.dat, idvar= c("study", "location", "coral.taxa", "sample.ID", "batch", "fraction", "depth.bin", "light.depth"), timevar="ESS.norm", direction='wide')
 
 #PCA.dat.wide$light.depth<-ifelse(PCA.dat.wide$fraction== "host" & PCA.dat.wide$depth.bin=="shallow", "high.light",
 #                                 ifelse(PCA.dat.wide$fraction== "symb" & PCA.dat.wide$depth.bin=="shallow", "high.light",
@@ -732,11 +958,11 @@ PC.norm.plot <- ggbiplot(PC.norm, choices = 1:2, obs.scale = 1, var.scale = 1,
     axis.text.x=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
 
 
-## PC1 and PC2
+## PC1 and PC2 (if want labels... labels = level)
 PC.norm.study <- ggbiplot(PC.norm, choices = 1:2, obs.scale = 1, var.scale = 1, 
                       groups=PCA.dat.wide$light.depth,
-                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95) +
-  geom_point(aes(shape=PCA.dat.wide$fraction, color=PCA.dat.wide$light.depth), size = 4) +
+                      ellipse = TRUE, circle = FALSE, labels=PCA.dat.wide$batch, alpha=0, ellipse.prob=0.95) + 
+  geom_point(aes(shape=PCA.dat.wide$fraction, color=PCA.dat.wide$light.depth), size = 1) +
   geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
   geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
   scale_x_continuous(breaks=pretty_breaks(n=5))+
@@ -755,5 +981,171 @@ PC.norm.study <- ggbiplot(PC.norm, choices = 1:2, obs.scale = 1, var.scale = 1,
 grid.arrange(PC.norm.plot, PC.norm.study)
 dev.copy(pdf, "figures/PCA.MC.all.pdf", width = 7, height = 10, encod="MacRoman")
 dev.off()
+```
+
+```{r esvi and Wall 2021}
+#remove corals from  Mario
+
+PCA.dat.wide.esvi.wall<-PCA.dat.wide[!(PCA.dat.wide$study=="Mario 2024" & PCA.dat.wide$coral.taxa=="M.capitata"),]
+PCA.dat.wide.esvi.wall$field.exp<-ifelse(PCA.dat.wide.esvi.wall$fraction=="plank", "plankton", 
+                                    ifelse(PCA.dat.wide.esvi.wall$study=="Wall 2021", "experim", "field"))
+
+df.PCA.dat.esvi.wall<-PCA.dat.wide.esvi.wall %>% dplyr::select("d13C.Thr.n", "d13C.Val.n", "d13C.Leu.n", "d13C.Ile.n", "d13C.Phe.n", "d13C.Lys.n")
+
+aggregate(coral.taxa~depth.bin:fraction, data=PCA.dat.wide.esvi.wall, FUN=length)
+
+# run the PCA on scaled and centered data
+set.seed(508)
+PC.norm.esvi.wall<- prcomp(df.PCA.dat.esvi.wall, center = TRUE, scale= TRUE) 
+
+PC.norm.summ.esvi.wall<-summary(PC.norm.esvi.wall) # 75% variation
+plot(PC.norm.esvi.wall, type="lines", main="PC.area eigenvalues")
+
+
+###### plot for PCA 
+
+## PC1 and PC2 by group and depth
+PC.norm.plot.esvi.wall <- ggbiplot(PC.norm.esvi.wall, choices = 1:2, obs.scale = 1, var.scale = 1, 
+                      groups=PCA.dat.wide.esvi.wall$fraction,
+                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95) +
+  geom_point(aes(shape=PCA.dat.wide.esvi.wall$fraction, color=PCA.dat.wide.esvi.wall$fraction), size = 4) +
+  geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
+  geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
+  scale_x_continuous(breaks=pretty_breaks(n=5))+
+  scale_color_manual(values=c("mediumorchid3", "sandybrown", "dodgerblue"))+
+  scale_shape_manual(values=c(16,1,17))+
+  ggtitle("ESS-normalized")+
+   theme_classic()+
+   theme(legend.text=element_text(size=10), 
+    panel.background = element_rect(colour = "black", linewidth=1),
+    legend.key = element_rect(color=NA, fill=NA),
+    axis.ticks.length=unit(0.2, "cm"), 
+    axis.text.y=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")),
+    axis.text.x=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
+
+PC.norm.plot.esvi.wall2 <- ggbiplot(PC.norm.esvi.wall, choices = 1:2, obs.scale = 1, var.scale = 1, 
+                      groups=PCA.dat.wide.esvi.wall$light.depth, #labels=PCA.dat.wide.esvi.wall$batch,
+                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95)+
+  geom_point(aes(shape=PCA.dat.wide.esvi.wall$fraction, color=PCA.dat.wide.esvi.wall$light.depth), size = 4) +
+  geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
+  geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
+  scale_x_continuous(breaks=pretty_breaks(n=5))+
+  scale_color_manual(values=c("palevioletred2", "darkslategray3","seagreen4", "dodgerblue"))+
+  scale_shape_manual(values=c(16,1,17))+
+  ggtitle("ESS-normalized")+
+   theme_classic()+
+   theme(legend.text=element_text(size=10), 
+    panel.background = element_rect(colour = "black", linewidth=1),
+    legend.key = element_rect(color=NA, fill=NA),
+    axis.ticks.length=unit(0.2, "cm"), 
+    axis.text.y=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")),
+    axis.text.x=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
+
+## compile
+grid.arrange(PC.norm.plot.esvi.wall, PC.norm.plot.esvi.wall2)
+dev.copy(pdf, "figures/PCA.MC.ESVI Wall.pdf", width = 7, height = 10, encod="MacRoman")
+dev.off()
+```
+
+
+```{r esvi alone}
+#remove corals from  Mario and Wall
+
+PCA.dat.wide2<-PCA.dat.wide[!(PCA.dat.wide$study=="Wall 2021" & PCA.dat.wide$coral.taxa=="M.capitata"),]
+PCA.dat.wide.esvi<-PCA.dat.wide2[!(PCA.dat.wide2$study=="Mario 2024" & PCA.dat.wide2$coral.taxa=="M.capitata"),]
+
+df.PCA.dat.esvi<-PCA.dat.wide.esvi %>% dplyr::select("d13C.Thr.n", "d13C.Val.n", "d13C.Leu.n", "d13C.Ile.n", "d13C.Phe.n", "d13C.Lys.n")
+
+aggregate(coral.taxa~depth.bin:fraction, data=PCA.dat.wide.esvi, FUN=length)
+
+# run the PCA on scaled and centered data
+set.seed(508)
+PC.norm.esvi<- prcomp(df.PCA.dat.esvi, center = TRUE, scale= TRUE) 
+
+PC.norm.summ.esvi<-summary(PC.norm.esvi) # 75% variation
+plot(PC.norm.esvi, type="lines", main="PC.area eigenvalues")
+
+
+###### plot for PCA 
+
+## PC1 and PC2 by group and depth
+PC.norm.plot.esvi <- ggbiplot(PC.norm.esvi, choices = 1:2, obs.scale = 1, var.scale = 1, 
+                      groups=PCA.dat.wide.esvi$fraction,
+                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95) +
+  geom_point(aes(shape=PCA.dat.wide.esvi$depth.bin, color=PCA.dat.wide.esvi$fraction), size = 4) +
+  geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
+  geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
+  scale_x_continuous(breaks=pretty_breaks(n=5))+
+  scale_color_manual(values=c("mediumorchid3", "sandybrown", "dodgerblue"))+
+  scale_shape_manual(values=c(16,1,17))+
+  ggtitle("ESS-normalized")+
+   theme_classic()+
+   theme(legend.text=element_text(size=10), 
+    panel.background = element_rect(colour = "black", linewidth=1),
+    legend.key = element_rect(color=NA, fill=NA),
+    axis.ticks.length=unit(0.2, "cm"), 
+    axis.text.y=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")),
+    axis.text.x=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
+
+#
+PC.norm.plot.esvi2 <- ggbiplot(PC.norm.esvi, choices = 1:2, obs.scale = 1, var.scale = 1, 
+                      groups=PCA.dat.wide.esvi$light.depth, #labels=PCA.dat.wide.esvi$sample.ID,
+                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95)+
+  geom_point(aes(shape=PCA.dat.wide.esvi$fraction, color=PCA.dat.wide.esvi$light.depth), size = 4) +
+  geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
+  geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
+  scale_x_continuous(breaks=pretty_breaks(n=5))+
+  scale_color_manual(values=c("palevioletred2", "darkslategray3","seagreen4", "dodgerblue"))+
+  scale_shape_manual(values=c(16,1,17))+
+  ggtitle("ESS-normalized")+
+   theme_classic()+
+   theme(legend.text=element_text(size=10), 
+    panel.background = element_rect(colour = "black", linewidth=1),
+    legend.key = element_rect(color=NA, fill=NA),
+    axis.ticks.length=unit(0.2, "cm"), 
+    axis.text.y=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")),
+    axis.text.x=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
+
+## compile
+grid.arrange(PC.norm.plot.esvi, PC.norm.plot.esvi2)
+dev.copy(pdf, "figures/PCA.MC.ESVI alone.pdf", width = 7, height = 10, encod="MacRoman")
+dev.off()
+```
+
+If we look at just the symbionts, across all the studies...
+```{r, symb only}
+PCA.dat.wide.esvi.wall
+PCA.dat.wide.symb<-PCA.dat.wide.esvi.wall[(PCA.dat.wide.esvi.wall$fraction=="symb"),]
+
+df.PCA.dat.symb<-PCA.dat.wide.symb %>% dplyr::select("d13C.Thr.n", "d13C.Val.n", "d13C.Leu.n", "d13C.Ile.n", "d13C.Phe.n", "d13C.Lys.n")
+
+# run the PCA on scaled and centered data
+set.seed(508)
+PC.norm.symb<- prcomp(df.PCA.dat.symb, center = TRUE, scale= TRUE) 
+
+PC.norm.summ.symb<-summary(PC.norm.symb) # 71% variation
+plot(PC.norm.symb, type="lines", main="PC.area eigenvalues")
+
+###### plot for PCA for symbuonts only
+
+## PC1 and PC2 by group and depth
+PC.norm.plot.symb <- ggbiplot(PC.norm.symb, choices = 1:2, obs.scale = 1, var.scale = 1, 
+                      groups=PCA.dat.wide.symb$depth.bin,
+                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95) +
+  geom_point(aes(color=PCA.dat.wide.symb$depth.bin, shape=PCA.dat.wide.symb$study), size = 4) +
+  geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
+  geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
+  scale_x_continuous(breaks=pretty_breaks(n=5))+
+  scale_color_manual(values=c("mediumorchid3", "sandybrown", "dodgerblue"))+
+  ggtitle("Symbionts: ESS-norm")+
+  scale_shape_manual(values=c(16,1,17))+
+   theme_classic()+
+   theme(legend.text=element_text(size=10), 
+    panel.background = element_rect(colour = "black", linewidth=1),
+    legend.key = element_rect(color=NA, fill=NA),
+    axis.ticks.length=unit(0.2, "cm"), 
+    axis.text.y=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")),
+    axis.text.x=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
+
 ```
 
