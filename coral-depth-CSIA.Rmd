@@ -23,7 +23,7 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.align='center')
 if (!require("pacman")) install.packages("pacman") # for rapid install if not in library
 
 # use pacman to load all the packages you are missing!
-pacman::p_load('knitr', 'lme4', 'lmerTest', 'tidyverse', 'effects', 'plyr', 'dplyr', 'plotrix', 'car',"gridExtra", "cowplot", "tools", "mgcv", "gratia", "MASS", "stats", "tidymv", "sjstats", "coin", "emmeans", "ggplot2", "mda", "nortest", "reshape2", "gmm", "propagate","ggmap", "RgoogleMaps", "MixSIAR","GGally", "ggbiplot", "ggcorrplot", "vegan", "pairwiseAdonis", "lubridate", "zoo", "plotrix")
+pacman::p_load('knitr', 'lme4', 'lmerTest', 'tidyverse', 'effects', 'plyr', 'dplyr', 'plotrix', 'car',"gridExtra", "cowplot", "tools", "mgcv", "gratia", "MASS", "stats", "tidymv", "sjstats", "coin", "emmeans", "ggplot2", "mda", "nortest", "reshape2", "gmm", "propagate","ggmap", "RgoogleMaps", "MixSIAR","GGally", "ggbiplot", "ggcorrplot", "vegan", "pairwiseAdonis", "lubridate", "zoo", "plotrix", "scales", "gggda")
 
 
 rm(list=ls()) 
@@ -47,7 +47,7 @@ Fig.formatting<-(theme_classic()) +
 ```
 
 ## Environmental data
-```{r}
+```{r env data}
 
 #PAR -- Odyssey: shallow 2' = SN16333, intermediate 10' = SN16321, deep 22' = SN16315
 #Temp -- Hobo: shallow 2' = 21556322, intermediate 10' = 21556332, deep 22' = 20970121
@@ -71,7 +71,7 @@ for(i in 1:length(files))
   df$Raw.Temp<-as.numeric(as.character(df$Temp))
   df$timestamp<-mdy_hms(as.character(df$Date.time)) # corrects date format
   df$timestamp<-strptime(df$timestamp, format="%Y-%m-%d %H:%M:%S")
-  df<- df %>% select(timestamp, Temp) # remove old date-time column
+  df<- df %>% dplyr::select(timestamp, Temp) # remove old date-time column
   df<-df[!(df$timestamp < "2024-06-17 11:00:00 HST"),] # start at this time
   df<-df[!(df$timestamp > "2024-06-21 10:00:00 HST"),] # end at this time
   #df$SN<-file.names[i]
@@ -99,7 +99,7 @@ d.temp<-read.csv("data/environmental/temp/interval discrep/21556322.csv",
   df$SN21556322.Temp<-as.numeric(as.character(df$SN21556322.Temp))
   df$timestamp<-mdy_hms(as.character(df$Date.time)) # corrects date format
   df$timestamp<-strptime(df$timestamp, format="%Y-%m-%d %H:%M:%S")
-  df<- df %>% select(timestamp, SN21556322.Temp) # remove old date-time column
+  df<- df %>% dplyr::select(timestamp, SN21556322.Temp) # remove old date-time column
   df<-df[!(df$timestamp < "2024-06-17 11:00:00 HST"),] # start at this time
   df<-df[!(df$timestamp > "2024-06-21 10:00:00 HST"),] # end at this time
   df$timestamp<-as.POSIXct(df$timestamp)
@@ -113,13 +113,16 @@ write.csv(df.all.temp, "output/Temp_hourly_light.depth.KBay.csv")
 
 # reorganize to 2 columns
 #df.all.temp$Date<-as.Date(df.all.temp$timestamp)
-shal.T<-df.all.temp %>% select(timestamp, SN21556322.Temp); shal.T$depth<-"shallow"; shal.T$SN<-"SN21556322"
+shal.T<-df.all.temp %>% dplyr::select(timestamp, SN21556322.Temp)
+shal.T$depth<-"shallow"; shal.T$SN<-"SN21556322"
 shal.T <- shal.T %>%  dplyr::rename("Temp.C" = "SN21556322.Temp")
 
-inter.T<-df.all.temp %>% select(timestamp, SN21556332.Temp); inter.T$depth<-"intermed"; inter.T$SN<-"SN21556332"
+inter.T<-df.all.temp %>% dplyr::select(timestamp, SN21556332.Temp)
+inter.T$depth<-"intermed"; inter.T$SN<-"SN21556332"
 inter.T <- inter.T %>%  dplyr::rename("Temp.C" = "SN21556332.Temp")
 
-deep.T<-df.all.temp %>% select(timestamp, SN20970121.Temp); deep.T$depth<-"deep"; deep.T$SN<-"SN20970121"
+deep.T<-df.all.temp %>% dplyr::select(timestamp, SN20970121.Temp)
+deep.T$depth<-"deep"; deep.T$SN<-"SN20970121"
 deep.T <- deep.T %>%  dplyr::rename("Temp.C" = "SN20970121.Temp")
 
 Temp.long<-rbind(shal.T, inter.T, deep.T)
@@ -187,11 +190,11 @@ colnames(PAR.export)<- c("Date", "timestamp", "SN16315.deep", "SN16321.interm", 
 write.csv(PAR.export, "output/PAR_light.depth.KBay.csv")
 
 ###### change format for ggplotting
-PAR.shal<- PAR.export %>% select("Date", "timestamp", "SN16333.shal") 
+PAR.shal<- PAR.export %>% dplyr::select("Date", "timestamp", "SN16333.shal") 
   PAR.shal$depth<-"shallow"; PAR.shal$SN<-"SN16333"; colnames(PAR.shal)[3]<-"PAR"
-PAR.interm<- PAR.export %>% select("Date", "timestamp", "SN16321.interm")
+PAR.interm<- PAR.export %>% dplyr::select("Date", "timestamp", "SN16321.interm")
   PAR.interm$depth<- "intermed" ; PAR.interm$SN<-"SN16321"; colnames(PAR.interm)[3]<-"PAR"
-PAR.deep<- PAR.export %>% select("Date", "timestamp", "SN16315.deep")
+PAR.deep<- PAR.export %>% dplyr::select("Date", "timestamp", "SN16315.deep")
   PAR.deep$depth<-"deep"; PAR.deep$SN<-"SN16315"; colnames(PAR.deep)[3]<-"PAR"
 
 PAR.long<-rbind(PAR.shal, PAR.interm, PAR.deep)
@@ -217,23 +220,39 @@ df.split <- split(PAR.export, f=PAR.export$timestamp
                   < as.Date("2024-06-18", format="%F")) # split df by date
 
 # interval is 10min, logging a value at 1 sec. 
-# Calculate as...60s*60m = (3600), *24h day *values /10^6= light over full day. If only "light interval" then specificy # of hours in the day (seasonal specific)
+# Approach 1: Calculate as DLI from instantaneous values...
+# 60s*60m = (3600), *24h day *values /10^6 = 0.0864 light over full day. 
+# If only "light interval" then specify # of hours in the day (seasonal specific)
 
+# Approach 2: Summing over day and calcualte from logging interval 
+# sum values over day and multiply by logging interval * seconds in minute (10min * 60sec), divide by 10^6
+
+# approach 1
 df.dli<-aggregate(data.frame(shal.DLI=df.split[[1]]$SN16333.shal*0.0864,
                              intermed.DLI=df.split[[1]]$SN16321.interm*0.0864,
                              deep.DLI=df.split[[1]]$SN16315.deep*0.0864),
                   by=list(Date=df.split[[1]]$Date), FUN=mean)
 
-df.dli<-df.dli[!(df.dli$Date=="2024-06-17"), ] # remove dates without full 24 h deployment
+# approach 2 (just to keep us honest)
+df.dli2<-aggregate(data.frame(shal.DLI=df.split[[1]]$SN16333.shal,
+                             intermed.DLI=df.split[[1]]$SN16321.interm,
+                             deep.DLI=df.split[[1]]$SN16315.deep),
+                  by=list(Date=df.split[[1]]$Date), FUN=sum)
+df.dli2$sh<-df.dli2$shal.DLI*(10*60)/1000000
+df.dli2$int<-df.dli2$intermed.DLI*(10*60)/1000000
+df.dli2$dp<-df.dli2$deep.DLI*(10*60)/1000000
+
+# # remove dates without full 24 h deployment 
+df.dli<-df.dli[!(df.dli$Date=="2024-06-17"), ] 
 df.dli<-df.dli[!(df.dli$Date >="2024-06-21"), ]
 
 
 ## combine dataframe
-shall.DLI.df<-df.dli %>% select (Date, shal.DLI); colnames(shall.DLI.df)[2]<- "DLI"
+shall.DLI.df<-df.dli %>% dplyr::select (Date, shal.DLI); colnames(shall.DLI.df)[2]<- "DLI"
   shall.DLI.df$depth<- "shallow"
-intermed.DLI.df<-df.dli %>% select (Date, intermed.DLI); colnames(intermed.DLI.df)[2]<- "DLI"
+intermed.DLI.df<-df.dli %>% dplyr::select (Date, intermed.DLI); colnames(intermed.DLI.df)[2]<- "DLI"
   intermed.DLI.df$depth<- "intermed"
-deep.DLI.df<-df.dli %>% select (Date, deep.DLI); colnames(deep.DLI.df)[2]<- "DLI"
+deep.DLI.df<-df.dli %>% dplyr::select (Date, deep.DLI); colnames(deep.DLI.df)[2]<- "DLI"
    deep.DLI.df$depth<- "deep"
 DLI.bind<-rbind(shall.DLI.df,intermed.DLI.df,deep.DLI.df)
 
@@ -242,6 +261,7 @@ DLI.bind$depth.m<- ifelse(DLI.bind$depth=="shallow", "<1m",
 
 DLI.bind$depth<-factor(DLI.bind$depth, levels=c("shallow", "intermed", "deep"))
 
+aggregate(DLI~depth, data=DLI.bind, FUN=mean)
 
 ############ plot the DLI data: note unites are mole photons m-2 d-1 at 10 min interval
 DLI.plot<-ggplot(DLI.bind, aes(x=depth.m, y=DLI, fill=depth)) + 
@@ -255,15 +275,137 @@ DLI.plot<-ggplot(DLI.bind, aes(x=depth.m, y=DLI, fill=depth)) +
 env.plots<-plot_grid(temp.plot, PAR.plot, DLI.plot+guides(fill="none"),
                             ncol=3, nrow=1, rel_widths = c(10,10,6))
 env.plots
-dev.copy(pdf, "figures/Figx.Temp.PAR.DLI.pdf", width = 12, height = 4, encod="MacRoman")
+dev.copy(pdf, "figures/Figx.Temp.PAR.DLI.pdf", width = 12, height = 4)
 dev.off()
 
 ```
 
+## Phys data
+```{r phys}
+phys.df<-read.csv("data/ESVI_PhysIso_pooledphys.csv")
+
+# make a meter column
+phys.df<- phys.df %>% 
+  dplyr::mutate(depth.m = depth.ft*0.3048)
+
+#calculate variables
+# total chlorophyll / cm2
+phys.df$chlcm2<-(phys.df$total.chl.ug.ml*phys.df$blastate.ml)/phys.df$surface.area.cm2
+
+# total biomass mg AFDW/ cm2
+phys.df$AFDW<- ((phys.df$biomass.g.ml*1000)*phys.df$blastate.ml)/phys.df$surface.area.cm2
+
+phys.df$depth.bin<-ifelse(phys.df$depth.ft<7, "shallow",
+                    ifelse(phys.df$depth.ft>20, "deep", "intermediate"))
+
+phys.df$depth.bin<-factor(phys.df$depth.bin, levels=c("shallow", "intermediate", "deep"))
+                    
+phys.df<- phys.df %>%
+  dplyr::select(species, sample.ID, site, depth.m, depth.bin, chlcm2, AFDW)
+
+###### plots
+# chl
+chl.bin<-ggplot(phys.df, aes(depth.bin, chlcm2)) +
+  facet_wrap(.~species)+
+  geom_boxplot(fill= "goldenrod", outlier.size = 0.7, alpha=0.5)+
+  ylab(expression(paste("total chlorophyll", " (\U00B5g/cm"^2, ")")))+
+  xlab("depth bin")+ theme_bw() +
+  theme(strip.text = element_text(face = "italic"))
+
+# AFDW
+biomass.bin<-ggplot(phys.df, aes(depth.bin, AFDW)) +
+  facet_wrap(.~species)+
+  geom_boxplot(fill= "goldenrod4", outlier.size = 0.7, alpha=0.5)+
+  ylab(expression(paste("AFDW", " (mg/cm"^2, ")")))+
+  xlab("depth bin")+ theme_bw() +
+  theme(strip.text = element_text(face = "italic"))
+
+###### summary stats
+AFDW.mean<-aggregate(AFDW~depth.bin*species, data=phys.df, FUN=mean)
+AFDW.se<-aggregate(AFDW~depth.bin*species, data=phys.df, FUN=std.error)
+AFDW.n<-aggregate(AFDW~depth.bin*species, data=phys.df, FUN=length)
+
+AFDW.sum<-cbind(AFDW.mean, AFDW.se[3], AFDW.n[3])
+colnames(AFDW.sum)<-c("depth.bin", "species", "AFDW.mean", "SE", "n")
+
+#
+chl.mean<-aggregate(chlcm2~depth.bin*species, data=phys.df, FUN=mean)
+chl.se<-aggregate(chlcm2~depth.bin*species, data=phys.df, FUN=std.error)
+chl.n<-aggregate(chlcm2~depth.bin*species, data=phys.df, FUN=length)
+
+chl.sum<-cbind(chl.mean, chl.se[3], chl.n[3])
+colnames(chl.sum)<-c("depth.bin", "species", "chl.mean", "SE", "n")
+
+# set dodge parameters
+dodge = position_dodge(width = 0.40)
+
+## dot mean and SE plot
+chl.dot.mean.plot<- ggplot(chl.sum, aes(y=chl.mean, x=depth.bin)) +
+  facet_wrap(.~species)+
+  geom_errorbar(aes(ymin = chl.mean-SE, ymax = chl.mean+SE), 
+                position = dodge, width = 0.0, linewidth = 0.75, color="gray20") +
+  geom_point(color="goldenrod", size=4, alpha=0.8)+
+  ylim(0,15)+
+  ylab(expression(paste("total chlorophyll", " (\U00B5g/cm"^2, ")")))+
+  xlab("depth bin")+ theme_bw() +
+  theme(strip.text = element_text(face = "italic"))
+
+## dot mean and SE plot
+AFDW.dot.mean.plot<-ggplot(AFDW.sum, aes(y=AFDW.mean, x=depth.bin)) +
+  facet_wrap(.~species)+
+  geom_errorbar(aes(ymin = AFDW.mean-SE, ymax = AFDW.mean+SE), 
+                position = dodge, width = 0.0, linewidth = 0.75, color="gray20") +
+  geom_point(color="goldenrod4", size=4, alpha=0.8)+
+  ylim(0,10)+
+  ylab(expression(paste("AFDW", " (mg/cm"^2, ")")))+
+  xlab("depth bin")+ theme_bw() +
+  theme(strip.text = element_text(face = "italic"))
+
+plot_grid(chl.dot.mean.plot, AFDW.dot.mean.plot, ncol=2)
+dev.print(pdf, "figures/phys.plots1.pdf", width=10, height=3)
+dev.off()
+```
+
+```{r}
+MC.phys<-phys.df [(phys.df$species=="M. capitata"),]
+PC.phys<-phys.df [(phys.df$species=="P. compressa"),]
+
+### Chl and AFDW model discrete and continuous
+####### MC
+chl.mod.MC<-lm(chlcm2~depth.bin, data=MC.phys)
+anova(chl.mod.MC) #NS
+
+chl.mod.cont.MC<-lm(chlcm2~depth.m, data=MC.phys)
+anova(chl.mod.cont.MC) #NS
+
+### AFDW model discrete and continuous
+AFDW.mod.MC<-lm(AFDW~depth.bin, data=MC.phys)
+anova(AFDW.mod.MC) # NS
+
+AFDW.mod.cont.MC<-lm(AFDW~depth.m, data=MC.phys)
+anova(AFDW.mod.cont.MC) #NS
+
+####### 
+### Chl and AFDW model discrete and continuous
+####### PC
+chl.mod.PC<-lm(chlcm2~depth.bin, data=PC.phys)
+anova(chl.mod.PC) #NS
+
+chl.mod.cont.PC<-lm(chlcm2~depth.m, data=PC.phys)
+anova(chl.mod.cont.PC) #NS
+
+### AFDW model discrete and continuous
+AFDW.mod.PC<-lm(AFDW~depth.bin, data=PC.phys)
+anova(AFDW.mod.PC) # NS
+
+AFDW.mod.cont.PC<-lm(AFDW~depth.m, data=PC.phys)
+anova(AFDW.mod.cont.PC) #NS
+```
 
 ## Bulk tissue EA analysis
 ```{r bulk}
-bulk.df<-read.csv("data/ESVI_bulkEA.csv")
+bulk.df.OG<-read.csv("data/ESVI_bulk iso_long.csv")
+bulk.df<-bulk.df.OG[!(bulk.df.OG$sample.ID=="MC03" & bulk.df.OG$fraction=="host"),] # odd d15N outlier, remove
 
 # make a meter column
 bulk.df<- bulk.df %>% 
@@ -280,7 +422,7 @@ make.fac<-c("species", "fraction", "sample.ID")
 bulk.df[make.fac]<-lapply(bulk.df[make.fac], factor) # make all these factors
 
 EA.df<-bulk.df %>%
-  dplyr::select(species, depth.m, depth.bin, fraction, ug.N, d15N, ug.C, d13C, C.N)
+  dplyr::select(species, depth.m, depth.bin, fraction, ug.N, d15N, ug.C, d13C, C.N.mol)
 
 # figures
 d13C.bin<-ggplot(EA.df, aes(depth.bin, d13C, fill=fraction)) +
@@ -301,7 +443,7 @@ d13C.depth<-ggplot(EA.df, aes(y=d13C, x=depth.m, color=fraction)) +
   xlab("depth (m)")+ theme_bw() +
   theme(strip.text = element_text(face = "italic"))
 
-MC.d13C.density<- ggplot(EA.df[(EA.df$species=="M.capitata"),] , aes(d13C, fill=fraction)) + 
+MC.d13C.density<- ggplot(EA.df[(EA.df$species=="Mcapitata"),] , aes(d13C, fill=fraction)) + 
   facet_wrap(.~depth.bin)+
   geom_density(alpha=.5) + 
   scale_fill_manual(values = c('gray50','goldenrod')) + xlim(-20, -12) + 
@@ -309,7 +451,7 @@ MC.d13C.density<- ggplot(EA.df[(EA.df$species=="M.capitata"),] , aes(d13C, fill=
   theme(plot.title = element_text(face = "italic")) +
   xlab(expression(paste(delta^{13}, C, " (\u2030)"))) + theme_bw()
 
-PC.d13C.density<- ggplot(EA.df[(EA.df$species=="P.compressa"),] , aes(d13C, fill=fraction)) + 
+PC.d13C.density<- ggplot(EA.df[(EA.df$species=="Pcompressa"),] , aes(d13C, fill=fraction)) + 
   facet_wrap(.~depth.bin)+
   geom_density(alpha=.5) + 
   scale_fill_manual(values = c('gray50','goldenrod')) + xlim(-20, -12) + 
@@ -338,11 +480,13 @@ d15N.depth<-ggplot(EA.df, aes(y=d15N, x=depth.m, color=fraction)) +
 
 ESVI.d13C.d15N<-plot_grid(d13C.bin, d15N.bin, d13C.depth, d15N.depth, nrow=4)
 ESVI.d13C.d15N
-dev.copy(pdf, "figures/ESVI.d13C.d15N.pdf", width = 7, height = 10, encod="MacRoman")
+dev.copy(pdf, "figures/ESVI.d13C.d15N.pdf", width = 7, height = 10)
 dev.off()
+```
 
+```{r bulk density, EVAL=FALSE}
 ########
-MC.d15N.density<- ggplot(EA.df[(EA.df$species=="M.capitata"),] , aes(d15N, fill=fraction)) + 
+MC.d15N.density<- ggplot(EA.df[(EA.df$species=="Mcapitata"),] , aes(d15N, fill=fraction)) + 
   facet_wrap(.~depth.bin)+
   geom_density(alpha=.5) + 
   scale_fill_manual(values = c('gray50','seagreen')) + xlim(2, 6) +
@@ -350,7 +494,7 @@ MC.d15N.density<- ggplot(EA.df[(EA.df$species=="M.capitata"),] , aes(d15N, fill=
   xlab(expression(paste(delta^{15}, N, " (\u2030)"))) + theme_bw()
 
 
-PC.d15N.density<- ggplot(EA.df[(EA.df$species=="P.compressa"),] , aes(d15N, fill=fraction)) + 
+PC.d15N.density<- ggplot(EA.df[(EA.df$species=="Pcompressa"),] , aes(d15N, fill=fraction)) + 
   facet_wrap(.~depth.bin)+
   geom_density(alpha=.5) + 
   scale_fill_manual(values = c('gray50','seagreen')) + xlim(2, 7) + 
@@ -358,38 +502,68 @@ PC.d15N.density<- ggplot(EA.df[(EA.df$species=="P.compressa"),] , aes(d15N, fill
   xlab(expression(paste(delta^{15}, N, " (\u2030)"))) + theme_bw()
 
 ESVI.density.d13C.d15N<-plot_grid(MC.d13C.density, PC.d13C.density, MC.d15N.density, PC.d15N.density, nrow=4)
-ESVI.density.d13C.d15N
-dev.copy(pdf, "figures/ESVI.density.d13C.d15N.pdf", width = 7, height = 11, encod="MacRoman")
-dev.off()
-
 ```
 
 ```{r CN}
-d13C.CN.bin<-ggplot(EA.df, aes(y=d13C, x=C.N, color=fraction)) +
+d13C.CN.bin<-ggplot(EA.df, aes(y=d13C, x=C.N.mol, color=fraction)) +
   facet_wrap(.~species)+
   geom_point(aes(shape=depth.bin), size=2.5)+
   scale_color_manual(values=c("skyblue2", "gray50")) +
   scale_fill_manual(values=c("skyblue3", "gray50")) +
   geom_smooth(method=lm, aes(fill=fraction)) +
   ylab(expression(paste(delta^{13}, C, " (\u2030)")))+
-  xlab("C:N")+ theme_bw() +
+  xlab("C:N (mol:mol)")+ theme_bw() +
   theme(strip.text = element_text(face = "italic"))
 
-d13C.CN<-ggplot(EA.df, aes(y=C.N, x=depth.m, color=fraction)) +
+d13C.CN<-ggplot(EA.df, aes(y=C.N.mol, x=depth.m, color=fraction)) +
   facet_wrap(.~species)+
   geom_point(size=2.5)+
   scale_color_manual(values=c("skyblue2", "gray50")) +
   scale_fill_manual(values=c("skyblue2", "gray50")) +
   geom_smooth(method=lm, aes(fill=fraction)) +
-  ylab("C:N values")+
+  ylab("C:N (mol:mol)")+
   xlab("depth (m)")+ theme_bw() +
   theme(strip.text = element_text(face = "italic"))
 
 CN.d13C.depth<-plot_grid(d13C.CN.bin, d13C.CN, nrow=1)
 CN.d13C.depth
-dev.copy(pdf, "figures/CN.d13C.depth.pdf", width = 12, height = 5, encod="MacRoman")
+dev.copy(pdf, "figures/CN.d13C.depth.pdf", width = 12, height = 5, )
 dev.off()
 
+```
+
+```{r models bulk iso}
+### d13C and d15N model discrete and continuous
+MC.iso<-EA.df [(EA.df$species=="Mcapitata"),]
+PC.iso<-EA.df [(EA.df$species=="Pcompressa"),]
+
+####### MC
+d13C.mod.MC<-lm(d13C~fraction*depth.bin, data=MC.iso)
+anova(d13C.mod.MC) # p<0.001 depth bin
+
+d13C.mod.cont.MC<-lm(d13C~fraction*depth.m, data=MC.iso)
+anova(d13C.mod.cont.MC) #p<0.001 depth 
+
+### d15N model discrete and continuous
+d15N.mod.MC<-lm(d15N~fraction*depth.bin, data=MC.iso)
+anova(d15N.mod.MC) #NS
+
+d15N.mod.cont.MC<-lm(d15N~fraction*depth.m, data=MC.iso)
+anova(d15N.mod.cont.MC) #NS
+
+####### PC
+d13C.mod.PC<-lm(d13C~fraction*depth.bin, data=PC.iso)
+anova(d13C.mod.PC) # p<0.001 depth bin
+
+d13C.mod.cont.PC<-lm(d13C~fraction*depth.m, data=PC.iso)
+anova(d13C.mod.cont.PC) #p<0.001 depth 
+
+### d15N model discrete and continuous
+d15N.mod.PC<-lm(d15N~fraction*depth.bin, data=PC.iso)
+anova(d15N.mod.PC) #NS
+
+d15N.mod.cont.PC<-lm(d15N~fraction*depth.m, data=PC.iso)
+anova(d15N.mod.cont.PC) #NS
 ```
 
 ```{r HS diff}
@@ -452,8 +626,569 @@ d15N.HS.bin<-ggplot(H.S, aes(depth.bin, d15N.h.s)) +
 
 ESVI.H.S<-plot_grid(d13C.HS.depth, d15N.HS.depth, d13C.HS.bin, d15N.HS.bin, nrow=4)
 ESVI.H.S
-dev.copy(pdf, "figures/ESVI.H.S.pdf", width = 6, height = 10, encod="MacRoman")
+dev.copy(pdf, "figures/ESVI.H.S.pdf", width = 6, height = 10, )
 dev.off()
+
+```
+
+```{r H S mods}
+H.S.df<-na.omit(H.S)
+
+### d13C and d15N model discrete and continuous
+MC.HS<-H.S.df [(H.S.df$species=="M.capitata"),]
+PC.HS<-H.S.df [(H.S.df$species=="P.compressa"),]
+
+####### MC
+HS.13C.mod.MC<-lm(d13C.h.s~depth.bin, data=MC.HS)
+anova(HS.13C.mod.MC) # NS
+
+HS.13C.mod.cont.MC<-lm(d13C.h.s~depth.m, data=MC.HS)
+anova(HS.13C.mod.cont.MC) # NS
+
+HS.15N.mod.MC<-lm(d15N.h.s~depth.bin, data=MC.HS)
+anova(HS.15N.mod.MC) #NS
+
+HS.15N.mod.cont.MC<-lm(d15N.h.s~depth.m, data=MC.HS)
+anova(HS.15N.mod.cont.MC) #NS
+
+####### PC
+HS.13C.mod.PC<-lm(d13C.h.s~depth.bin, data=PC.HS)
+anova(HS.13C.mod.PC) # 0.043
+
+emmeans(HS.13C.mod.PC, pairwise ~ depth.bin) # intermed diff from deep
+
+HS.13C.mod.cont.PC<-lm(d13C.h.s~depth.m, data=PC.HS)
+anova(HS.13C.mod.cont.PC) # NS
+
+HS.15N.mod.PC<-lm(d15N.h.s~depth.bin, data=PC.HS)
+anova(HS.15N.mod.PC) #NS
+
+HS.15N.mod.cont.PC<-lm(d15N.h.s~depth.m, data=PC.HS)
+anova(HS.15N.mod.cont.PC) # NS
+
+```
+
+## SIBER
+Use δ^13^C and δ^15^N biplots and perform `SIBER: Stable Isotope Bayesian Ellipse in R` analysis. This will plot the raw data with the standardized ellispe area, with 40% probability. This calculates the Isotope Niche Width.
+```{r Siber, fig.show='hide', results='hide'}
+### BULK d13C-d15N BIPLOT AND STANDARD ELLIPSES### 
+
+# load the SIBER package: library(SIBER)
+# load the data: library(dplyr)
+
+# load bulk data from above = 'EA.df'
+MC.df<-EA.df[(EA.df$species=="Mcapitata"),]
+PC.df<-EA.df[(EA.df$species=="Pcompressa"),]
+
+# subset to be only bulk d13C and d15N
+bulk.siber<- EA.df %>%
+  dplyr::select(d13C, d15N, fraction, species)
+
+all.siber.data<- bulk.siber %>%  dplyr::rename(iso1 = d13C, iso2 = d15N, group=fraction, community=species)
+
+# filter for each species 
+MC.siber.data<- all.siber.data %>%
+  filter(community =="Mcapitata")
+PC.siber.data<- all.siber.data %>%
+  filter(community =="Pcompressa")
+
+# droplevels
+MC.siber.data$community<-droplevels(MC.siber.data$community)
+PC.siber.data$community<-droplevels(PC.siber.data$community)
+
+# Create the SIBER object
+all.siber<- createSiberObject(all.siber.data)
+MC.siber <- createSiberObject(MC.siber.data)
+PC.siber <- createSiberObject(PC.siber.data)
+
+# for Hotelling things
+hotellings.data <- data.frame(
+  group = as.numeric(as.factor(all.siber.data$group)),
+  x = all.siber.data$iso1,
+  y = all.siber.data$iso2)
+
+hotellings.MC.data <- data.frame(
+  group = as.numeric(as.factor(MC.siber.data$group)),
+  x = MC.siber.data$iso1,
+  y = MC.siber.data$iso2)
+
+hotellings.PC.data <- data.frame(
+  group = as.numeric(as.factor(PC.siber.data$group)),
+  x = PC.siber.data$iso1,
+  y = PC.siber.data$iso2)
+
+
+########### ellipses
+community.hulls.args <- list(col = 1, lty = 1, lwd = 1)
+group.ellipses.args2  <- list(n = 100, p.interval = 0.95, lty = 1, lwd = 2)
+group.ellipses.args  <- list(n = 100, p.interval = 0.40, lty = 1, lwd = 2) #Standard ellipse
+group.hulls.args     <- list(lty = 2)
+
+# ellipses and group.hulls are set to TRUE or T for short to force their plotting
+palette(c("coral", "dodgerblue"))
+par(mfrow=c(1,1))
+plotSiberObject(MC.siber,
+                ax.pad = 2, 
+                hulls = F, community.hulls.args, 
+                ellipses = T, group.ellipses.args,
+                group.hulls = T, group.hulls.args,
+                bty = "L",
+                iso.order = c(1,2),
+                xlab = expression({delta}^13*C~'‰'),
+                ylab = expression({delta}^15*N~'‰'),
+                x.limits=c(-20.0, -14),
+                y.limits = c(2, 8)
+)
+mtext("40% SEAc = 63% \n 95% MEAc = 97%", side = 3, line = 0, cex = 0.75)
+
+```
+
+
+```{r Siber ggplots, fig.show='hide', results='hide'}
+####### alternative plots in ggplot
+
+### Montipora siber plot
+palet.col<-c("coral", "dodgerblue")
+
+# go with ggplot, bc base R is BASSSSSIC
+Siber.plot.MC<-ggplot(data=MC.df, aes(y=d15N, x=d13C))+
+  geom_point(size=4, aes(fill=fraction, shape=depth.bin))+
+  xlab(expression({delta}^13*C~'‰'))+
+  ylab(expression({delta}^15*N~'‰'))+
+  ggtitle("M. capitata")+
+  xlim(-20, -14)+
+  ylim(2.5, 6)+
+  scale_shape_manual(values=c(25,22,23),
+                     name = "Depth bin") +
+  scale_fill_manual(values=palet.col,
+                    name = "Fraction", 
+                    labels = c("host", "symbiont"))+
+  guides(fill = guide_legend(override.aes = list(shape = 21))) +
+  theme_bw() + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  theme(legend.background=element_blank()) +
+# add in the ellipses from Siber
+  stat_ellipse(aes(group = (fraction),
+                   color = fraction), 
+               alpha = 0, 
+               level = 0.4,
+               linewidth=1, size=0.9,
+               type = "norm",
+               geom = "polygon") + 
+  scale_color_manual(values=c("coral", "dodgerblue")) +
+  stat_chull(aes(color = fraction, fill = fraction), alpha = 0.05, linetype=2, geom = "polygon")+
+  annotate(geom="text", label="40% SEAc = 63% \n 95% MEAc = 84%", x=-15, y=2.6, color="black", size=3) +
+  guides(color="none")
+
+
+########## Porites Siber plot
+Siber.plot.PC<-ggplot(data=PC.df, aes(y=d15N, x=d13C))+
+  geom_point(size=4, aes(fill=fraction, shape=depth.bin))+
+  xlab(expression({delta}^13*C~'‰'))+
+  ylab(expression({delta}^15*N~'‰'))+
+  ggtitle("P. compressa")+
+  xlim(-20, -14)+
+  ylim(2.5, 6)+
+  scale_shape_manual(values=c(25,22,23),
+                     name = "Depth bin") +
+  scale_fill_manual(values=palet.col,
+                    name = "Fraction", 
+                    labels = c("host", "symbiont"))+
+  guides(fill = guide_legend(override.aes = list(shape = 21))) +
+  theme_bw() + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  theme(legend.background=element_blank()) +
+# add in the ellipses from Siber
+  stat_ellipse(aes(group = (fraction),
+                   color = fraction), 
+               alpha = 0, 
+               level = 0.4,
+               linewidth=1, size=0.9,
+               type = "norm",
+               geom = "polygon") + 
+  scale_color_manual(values=c("coral", "dodgerblue")) +
+  stat_chull(aes(color = fraction, fill = fraction), alpha = 0.05, linetype=2, geom = "polygon")+
+  annotate(geom="text", label="40% SEAc = 94% \n 95% MEAc = 97%", x=-15, y=2.6, color="black", size=3) +
+  guides(color="none")
+
+##############
+### combine
+extract.legend <- get_legend(
+  # create some space to the left of the legend
+  Siber.plot.PC + theme(legend.box.margin = margin(0, 0, 0, 10)))
+
+siber.plots<-plot_grid(Siber.plot.MC+guides(color="none", fill="none", shape="none"), 
+                       Siber.plot.PC+guides(color="none", fill="none", shape="none"),
+                       extract.legend, ncol=3, rel_widths = c(2,2,0.6))
+
+siber.plots
+dev.copy(pdf, "figures/Siber.plots.pdf", width = 9.5, height = 6)
+dev.off()
+```
+
+Calculate the posterior estimates of the `Bayesian Standard Ellipse Area (SEA~B~)`. We will add this to the SIBER biplot generated above. The SEA~B~ plot shows the  95%, 75%, and 50% credible intervals for each species, with modes indicated by black circles.
+
+Calculate summary statistics for each group: TA, SEA and SEAc
+```{r}
+# * note sensitivity to sample size for n < 10 such that small sample sizes typically result in underestimation of the population TA
+
+# TA = total area of the convex hull, (TA) is highly sensitive to sample size and increases with sample size.
+
+## SEA asymptotes quickly to a constant value (in this case p, as both a and b = 1), at around n = 30. The underestimation of the population SEA for small sample sizes is an undesirable property, as it is likely to confound comparisons between studies with unequal sample sizes.
+
+# SEA-c: calculation of a corrected standard ellipse based on low sample size
+
+# SEA-b: The Bayesian estimate captures all the same properties as SEAc, being unbiased with respect to sample size and exhibiting more uncertainty with smaller sample size.
+
+group.ML.MC <- groupMetricsML(MC.siber)
+print(group.ML.MC)
+
+group.ML.PC<- groupMetricsML(PC.siber)
+print(group.ML.PC)
+```
+
+After calling siberMVN() you will see output in the command window indicating that the jags models are being fitted, one block of output for each group in your dataset. 
+
+```{r Siber JAGS}
+# options for running jags
+parms <- list()
+parms$n.iter <- 2 * 10^4   # number of iterations to run the model for
+parms$n.burnin <- 1 * 10^3 # discard the first set of values
+parms$n.thin <- 10     # thin the posterior by this many
+parms$n.chains <- 2        # run this many chains
+
+# define the priors
+priors <- list()
+priors$R <- 1 * diag(2)
+priors$k <- 2
+priors$tau.mu <- 1.0E-3
+
+# fit the ellipses which uses an Inverse Wishart prior
+# on the covariance matrix Sigma, and a vague normal prior on the 
+# means. Fitting is via the JAGS method.
+MC.ellipses.posterior <- siberMVN(MC.siber, parms, priors)
+PC.ellipses.posterior <- siberMVN(PC.siber, parms, priors)
+```
+
+When comparing individual groups with each other, be it within a single community, or groups among communities, the `Standard Ellipse Area (SEA)` is the recommended method. 
+
+Since the multivariate normal distributions have already been fitted to each group, it only remains to calculate the SEA on the posterior distribution of covariance matrix for each group, thereby yielding the `Bayesian SEA or SEA-B`. 
+
+We can also use the summary statistics we calculated earlier to add the maximum likelihood estimates of `SEA-c` to the Bayesian estimates. Credible intervals can be extracted by calling the function hdr from the hdrcde package.
+
+```{r SEAb}
+# The posterior estimates of the ellipses for each group can be used to
+# calculate the SEA.B for each group with probs = c(95, 75, 50)
+SEA.B.MC <- siberEllipses(MC.ellipses.posterior)
+
+my_clrs <- matrix(c("salmon2", "coral", "red2","powderblue", "turquoise", "turquoise3"), nrow = 3, ncol = 2)
+
+siberDensityPlot(SEA.B.MC, xticklabels = colnames(group.ML.MC), 
+                xlab = c("Community | Group"),
+                ylab = expression("SEA "[B]~ ('\u2030' ^2) ),
+                bty = "L",
+                las = 1,
+                ylim = c(0,4),
+                main = "SIBER ellipse: M compressa",
+                clr = my_clrs)
+
+# Add red x's for the ML estimated SEA-c
+points(1:ncol(SEA.B.MC), group.ML.MC[3,], col="black", pch = "x", lwd = 3)
+
+#SEAb.plot.MC<- recordPlot()
+dev.copy(pdf, "figures/SEAb.plot.MC.pdf", height=7, width=5)
+dev.off()
+
+######################
+SEA.B.PC <- siberEllipses(PC.ellipses.posterior)
+
+siberDensityPlot(SEA.B.PC, xticklabels = colnames(group.ML.PC), 
+                xlab = c("Community | Group"),
+                ylab = expression("SEA "[B]~ ('\u2030' ^2) ),
+                bty = "L",
+                las = 1,
+                ylim = c(0,4),
+                main = "SIBER ellipses: P compressa",
+                clr = my_clrs)
+
+# Add black x's for the ML estimated SEA-c
+points(1:ncol(SEA.B.PC), group.ML.PC[3,], col="black", pch = "x", lwd = 3)
+
+#SEAb.plot.PC<- recordPlot()
+dev.copy(pdf, "figures/SEAb.plot.PC.pdf", height=7, width=5)
+dev.off()
+
+```
+
+One can calculate the overlap between two (or more) ellipses. In the first instance, this overlap is simply the area, in units of per mil squared, contained by the shape that lies within the overlapping region. This overlap is most easily calculated by using the *SEAc* of each ellipse.
+
+The proportion of overlap is calculated as per Conti-Jerpe 2020:
+*...as the proportion of the host SEAc that the total overlap accounts for.* = overlap/host-SEAc
+
+The overlap between the SEAc for groups 1.2 and 1.3 is given by:
+```{r}
+############ 40% overlap = SEAc
+### Mcap
+overlap.G1.2.G1.3.MC <- maxLikOverlap("Mcapitata.host", "Mcapitata.symbiont", MC.siber, p = 0.40, n =)
+
+prop.of.first.MC <- as.numeric(overlap.G1.2.G1.3.MC["overlap"] / overlap.G1.2.G1.3.MC["area.1"])
+print(prop.of.first.MC) # 63% overlap = proportion of total overlap relative to the host SEAc 
+
+prop.of.second.MC <- as.numeric(overlap.G1.2.G1.3.MC["overlap"] / overlap.G1.2.G1.3.MC["area.2"])
+print(prop.of.second.MC) # 46% overlap = = proportion of total overlap relative to the symbiont SEAc 
+
+### Pcomp
+overlap.G1.2.G1.3.PC <- maxLikOverlap("Pcompressa.host", "Pcompressa.symbiont", PC.siber, p = 0.40, n =)
+
+prop.of.first.PC <- as.numeric(overlap.G1.2.G1.3.PC["overlap"] / overlap.G1.2.G1.3.PC["area.1"])
+print(prop.of.first.PC) # 94% overlap host with symbiont
+
+
+############ 95% overlap = "Major ellipse area"  = MEA
+### Mcap
+overlap.G1.2.G1.3.MC <- maxLikOverlap("Mcapitata.host", "Mcapitata.symbiont", MC.siber, p = 0.95, n =)
+
+prop.of.first.MC <- as.numeric(overlap.G1.2.G1.3.MC["overlap"] / overlap.G1.2.G1.3.MC["area.1"])
+print(prop.of.first.MC) # 84% overlap host with symbiont
+
+
+### Pcomp
+overlap.G1.2.G1.3.PC <- maxLikOverlap("Pcompressa.host", "Pcompressa.symbiont", PC.siber, p = 0.95, n =)
+
+prop.of.first.PC <- as.numeric(overlap.G1.2.G1.3.PC["overlap"] / overlap.G1.2.G1.3.PC["area.1"])
+print(prop.of.first.PC) # 97% overlap host with symbiont
+
+```
+*Montipora capitata* = 63% overlap (Host-SEAc), 84% (Host-MEAc)
+*Porites compressa* = 94% overlap (Host-SEAc), 97% (Host-MEAc)
+
+```{r Turner, eval=FALSE}
+source('scripts/Turner.et.al.ecology.source.r')
+
+# set df here
+# PC.df
+# MC.df
+
+#headings of columns in .csv must be "group", "x", and "y", where x = d13C
+Turn.df<-PC.df %>% dplyr::select(fraction, d13C, d15N)
+colnames(Turn.df)<-c("group", "x", "y")
+
+Y<-as.matrix(Turn.df[,2:3])
+
+# Designate groups
+group<-as.factor(Turn.df[,1])
+gp<-length(levels(group)) # number of groups
+n.comp<-(gp^2-gp)/2 # number of possible comparisons
+rownames(Y)<-group 
+
+lm.gp<-lm(Y~group,x=T,model=T) # for estimating group means
+#This outputs the centroid of one group and distance in x and y to the centroid of the second group
+
+res.gp<-resid(lm.gp) # residuals of groups from group means
+yhat.gp<-predict(lm.gp) # predicted values
+
+lm.gp.red<-lm(Y~1) # this is the model reduced by the group factor: only estimates an overall mean
+
+#PLOTS
+
+par(mai=c(1,1,0.5,0.5))
+
+Trophic.1<-Turn.df[Turn.df$group=="host",2:3]
+Trophic.2<-Turn.df[Turn.df$group=="symbiont",2:3]
+All.pts<-rbind(Trophic.1,Trophic.2)
+
+
+plot(All.pts,type='n',asp=1,xlab=expression(delta^13~C),ylab=expression(delta^15~N),cex.lab=1.7,cex.axis=1.7)
+points(Trophic.1, pch=21,bg="coral") # host
+points(Trophic.2, pch=21,bg="dodgerblue") # symbiont
+Trophic.1.c<-colMeans(Trophic.1)
+Trophic.2.c<-colMeans(Trophic.2)
+
+points(Trophic.1.c[1],Trophic.1.c[2], pch=21,bg="coral",cex=1.7,lwd=2.5) # centroid = x (-16.606667), y (4.273333) 
+points(Trophic.2.c[1],Trophic.2.c[2], pch=21,bg="dodgerblue",cex=1.7,lwd=2.5) # centroid = x (-16.520000), y (4.466667) 
+
+
+######## DISPERSION MEASURES: MDC, MNN, ECC
+#mdc = mean centroid distance
+#mnn = mean nearest neighbor
+#ecc = eccentricity
+
+ex1<-ds.prep(res.gp,group) # see source file
+ex1.ds<-disp.stat(ex1) # see source file
+ex1.ds
+
+# GROUP MEANS
+gp.m<-group.means(Y,group) # finds the group means for the raw data
+gp.m
+
+# CONTRASTS
+mean.dif<-as.vector(dist(as.matrix(gp.m)))
+mean.dif
+
+disp.dif<-ds.dif(ex1.ds) # Dimension names not given by output
+
+disp.dif 
+disp.dif$mdc
+disp.dif$mnn
+disp.dif$ecc
+
+#### PERMUTATION PROCEDURE ####
+
+# Describe a function that needs
+# x = the full linear model
+# x2 = the reduced linear model
+# y = the raw data
+# g = group list
+# p = the number of permutations to use (keep in mind that
+# the observed values count as 1 random permutation)
+
+# SETUP
+permute<-function(x,x2,y,g,p){
+  p.table<-NULL
+  
+  yhat<-predict(x)
+  res<-resid(x)
+  line<-nrow(res) # this defines the number of permutable objects
+  yhat.2<-predict(x2)
+  res.2<-resid(x2)
+  
+  mean.dif<-as.vector(dist(as.matrix(group.means(Y,g))))
+  
+  
+  for(i in 1:p){
+    
+    #For dispersion tests
+    
+    line.rand<-sample(line,replace=FALSE) # This creates a line from 1 to the number
+    # of permutable objects, then randomizes the order
+    res.temp<-cbind(line.rand,res) # attaches the random order to the ordered matrix
+    z<-(order(line.rand)) # randomizes matrix as it reorders line
+    res.temp2<-as.matrix(res.temp[z,])# removes randomized line
+    res.p<-res.temp2[,-1] # Rows of residuals are now randomized
+    y.rand<-yhat+res.p # random values created
+    
+    # The resampling procedure above is the same as randomizing original values
+    # (Since the reduced model only contains the overall mean)
+    # But using residuals makes it applicable to multi-factor models
+    
+    lm.r<-lm(y.rand~g,x=T,model=T) # new linear model
+    r<-resid(lm.r)
+    yhat<-predict(lm.r)
+    ex1.r<-ds.prep(r,g) #thanks to the functions, prep takes one step
+    ex.r.ds<-disp.stat(ex1.r) # thanks to the function, dispersion stats require one step
+    disp.dif.r<-ds.dif(ex.r.ds) # thanks to function, contrasts require one step
+    
+    
+    # For means tests
+    
+    # uses different linear model
+    # the null hypothesis that means are equal
+    # means that an intercept model (i.e., defines only the overall mean)
+    # is as viable as a group means model.
+    # Thus, residuals are calculated from the intercept model (see above)
+    # and random means are created despite no mean differences define by the model
+    # this creates random distibutions of outcomes under the null hypothesis
+    
+    res.2.temp<-cbind(line.rand,res.2)
+    z<-(order(line.rand))
+    res.2.temp2<-as.matrix(res.2.temp[z,])
+    res.2.p<-res.temp2[,-1] # Rows of residuals are now randomized
+    y.rand.2<-yhat.2+res.2.p
+    
+    
+    gm.r<-group.means(y.rand.2,g)
+    md.r<-as.vector(dist(as.matrix(gm.r)))
+    
+    result<-c(i,md.r,disp.dif.r$mdc,disp.dif.r$mnn,disp.dif.r$ecc) # bind all results together
+    p.table<-rbind(p.table,result) # add them to a table, row by row
+    
+  }
+  
+  head<-NULL # create a header
+  line1<-as.vector(c(0,mean.dif,disp.dif$mdc,disp.dif$mnn,disp.dif$ecc))
+  
+  # The following is a bunch of code simply for generating column names in the output
+  
+  cn<-length(mean.dif) # cn = column name
+  
+  test.list<-NULL
+  if (cn>1) for(i in 1:cn){
+    l1<-rep(i,cn)
+    l2<-array(1:cn)
+    l12<-cbind(l1,l2)
+    test.list<-rbind(test.list,l12)
+  }
+  
+  test.list2<-NULL
+  if (cn>1) for(j in 1:nrow(test.list)){
+    t<-test.list[j,]
+    if(t[2]>t[1]) test.list2<-rbind(test.list2,t)
+  }
+  
+  test.list3<-NULL
+  if (cn>1) for(k in 1:nrow(test.list2)){
+    t<-test.list2[k,]
+    lab<-paste(t[1],t[2],sep="--")
+    test.list3<-rbind(test.list3,lab)}
+  
+  if (cn==1) test.list3<-c("1--2")
+  
+  lab2<-c(rep("MD",cn),rep("MDC",cn),rep("MNN",cn),rep("ECC",cn))
+  test.list4<-paste(lab2,test.list3,sep=".")
+  
+  head<-c("iteration",test.list4)
+  p.table<-rbind(head,line1,p.table)
+  
+}
+
+
+test1<-permute(lm.gp,lm.gp.red,Y,group,999) # run the permutation test
+
+# results can be opened in e.g., excel. 
+# Find the P-value by measuring the rank of the first value in the distribution of values in the same column.  
+# p.table.out<-test1
+# write.csv(p.table.out,"output/ACRO_results.csv") 
+# Alternatvely, more R-code can
+# be generated to calculate P-values by using a function that ranks observed values
+# see below
+
+# P-Values
+h<-test1[1,];h<-h[-1]
+t<-test1[-1,];t<-t[,-1]
+f<-function(t){
+  r<-rank(t)
+  p<-r[1]
+  c<-length(t)
+  pv<-(c-p+1)/c}
+p.value<-apply(t,2,f)
+names(p.value)<-h
+
+p.value
+
+
+#ADDENDUM: HOTELLING'S T2
+#Each group comparison one at a time
+
+#Comparing groups 1 (host) and 2 (symbiont) 
+gp.m.dif<-gp.m[1,]-gp.m[2,] # vector for difference between means
+gn<-tapply(group,group,length) # group sizes
+e<-resid(lm.gp)
+E<-t(e)%*%e
+n<-nrow(e)
+k<-lm.gp$rank
+V<-(1/(n-k))*E # This is the pooled within-group vcv
+
+d<-gp.m.dif; dim(d)<-c(1,length(d))
+
+D<-d%*%solve(V)%*%t(d) # Squared Mahalanobis Distance
+
+H.T2<-(gn[1]*gn[2])/(gn[1]+gn[2])*D # Hotelling T2
+
+F<-(gn[1]+gn[2]-2-1)/((gn[1]+gn[2])*2)*H.T2 # Convert to an F value
+
+P<-df(F,2,(gn[1]+gn[2]-2-1)) # P-value
+
+P
 
 ```
 
@@ -578,7 +1313,7 @@ ESSbox<-ggplot(df.ESS.norm.long, aes(x=ESS.norm, y=d13C, fill=depth.bin, color=f
   theme_classic()
 
 ESVI.mc<-grid.arrange(AAbox, ESSbox)
-dev.copy(pdf, "figures/ESVI.MC.box.pdf", width = 15, height = 10, encod="MacRoman")
+dev.copy(pdf, "figures/ESVI.MC.box.pdf", width = 15, height = 10, )
 dev.off()
 ```
 
@@ -694,7 +1429,7 @@ ESSbox.wall<-ggplot(df.ESS.norm.wall.long, aes(x=ESS.norm, y=d13C, fill=fraction
 
 ## compile
 wall.mc<-grid.arrange(AAbox.wall, ESSbox.wall)
-dev.copy(pdf, "figures/Wall.MC.box.pdf", width = 9, height = 10, encod="MacRoman")
+dev.copy(pdf, "figures/Wall.MC.box.pdf", width = 9, height = 10, )
 dev.off()
 ```
 
@@ -911,7 +1646,7 @@ ESSbox.comb<-ggplot(comb.df.MC, aes(x=ESS.norm, y=d13C, fill=depth.bin, color=fr
 
 ESSbox.comb
 ## 
-dev.copy(pdf, "figures/ESSbox.comb.pdf", width = 9, height = 7, encod="MacRoman")
+dev.copy(pdf, "figures/ESSbox.comb.pdf", width = 9, height = 7, )
 dev.off()
 ```
 
@@ -940,7 +1675,7 @@ plot(PC.norm, type="lines", main="PC.area eigenvalues")
 ## PC1 and PC2 by group and depth
 PC.norm.plot <- ggbiplot(PC.norm, choices = 1:2, obs.scale = 1, var.scale = 1, 
                       groups=PCA.dat.wide$fraction,
-                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95) +
+                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95, ellipse.fill=NA, ellipse.linewidth=0.5) +
   geom_point(aes(shape=PCA.dat.wide$depth.bin, color=PCA.dat.wide$fraction), size = 4) +
   geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
   geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
@@ -960,9 +1695,9 @@ PC.norm.plot <- ggbiplot(PC.norm, choices = 1:2, obs.scale = 1, var.scale = 1,
 
 ## PC1 and PC2 (if want labels... labels = level)
 PC.norm.study <- ggbiplot(PC.norm, choices = 1:2, obs.scale = 1, var.scale = 1, 
-                      groups=PCA.dat.wide$light.depth,
-                      ellipse = TRUE, circle = FALSE, labels=PCA.dat.wide$batch, alpha=0, ellipse.prob=0.95) + 
-  geom_point(aes(shape=PCA.dat.wide$fraction, color=PCA.dat.wide$light.depth), size = 1) +
+                      groups=PCA.dat.wide$light.depth, ellipse.fill=NA, ellipse.linewidth=0.5,
+                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95)  + #labels=PCA.dat.wide$batch)  
+  geom_point(aes(shape=PCA.dat.wide$fraction, color=PCA.dat.wide$light.depth), size = 4) +
   geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
   geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
   scale_x_continuous(breaks=pretty_breaks(n=5))+
@@ -979,7 +1714,7 @@ PC.norm.study <- ggbiplot(PC.norm, choices = 1:2, obs.scale = 1, var.scale = 1,
 
 ## compile
 grid.arrange(PC.norm.plot, PC.norm.study)
-dev.copy(pdf, "figures/PCA.MC.all.pdf", width = 7, height = 10, encod="MacRoman")
+dev.copy(pdf, "figures/PCA.MC.all.pdf", width = 7, height = 10)
 dev.off()
 ```
 
@@ -1043,7 +1778,7 @@ PC.norm.plot.esvi.wall2 <- ggbiplot(PC.norm.esvi.wall, choices = 1:2, obs.scale 
 
 ## compile
 grid.arrange(PC.norm.plot.esvi.wall, PC.norm.plot.esvi.wall2)
-dev.copy(pdf, "figures/PCA.MC.ESVI Wall.pdf", width = 7, height = 10, encod="MacRoman")
+dev.copy(pdf, "figures/PCA.MC.ESVI Wall.pdf", width = 7, height = 10, )
 dev.off()
 ```
 
@@ -1064,13 +1799,50 @@ PC.norm.esvi<- prcomp(df.PCA.dat.esvi, center = TRUE, scale= TRUE)
 
 PC.norm.summ.esvi<-summary(PC.norm.esvi) # 75% variation
 plot(PC.norm.esvi, type="lines", main="PC.area eigenvalues")
+```
 
+```{r PERMANOVA}
+# groups with 3 groups (host, symb, plank)
+PCA.esvi.fac<-PCA.dat.wide.esvi %>% dplyr::select(fraction)
 
+# run PERMANOVA
+set.seed(51)
+PCA.esvi.norm.frac<-adonis2(df.PCA.dat.esvi ~ fraction, data = PCA.esvi.fac, 
+                         permutations = 999, method = "euclidian", by = "terms")
+PCA.esvi.norm.frac # fractions (host, symb, plankton) different at p=0.001, R2=0.51
+
+### run pairwise for effects of fraction
+set.seed(51)
+pairwise.adonis(df.PCA.dat.esvi, factors = c(PCA.esvi.fac$fraction), sim.method = "euclidian", p.adjust.m = "none")
+# all groups differ from each other, p=0.001 for plankton vs. host and symbiont, 0.034 for host/symb
+
+###################################
+###################################
+# coral and symb only'
+coral.esvi<-PCA.dat.wide.esvi[(!PCA.dat.wide.esvi$fraction=="plank"),]
+coral.esvi$fraction<-droplevels(coral.esvi$fraction)
+
+# make data and fact
+PCA.coral<- coral.esvi %>% dplyr::select("d13C.Thr.n", "d13C.Val.n", "d13C.Leu.n", "d13C.Ile.n", "d13C.Phe.n", "d13C.Lys.n")
+PCA.coral.fac<- coral.esvi %>% dplyr::select(fraction, depth.bin)
+
+# run PERMANOVA
+set.seed(51)
+PCA.esvi.norm.frac<-adonis2(PCA.coral ~ fraction + depth.bin, data = PCA.coral.fac, 
+                         permutations = 999, method = "euclidian", by = "terms")
+PCA.esvi.norm.frac 
+# host and symb slightly different at p=0.043, R2=0.13
+# no difference across depth bins, p=0.910, R2=0.04
+# no interaction: p=0.848, R2=0.04
+
+```
+
+```{r esvi PCA}
 ###### plot for PCA 
 
 ## PC1 and PC2 by group and depth
 PC.norm.plot.esvi <- ggbiplot(PC.norm.esvi, choices = 1:2, obs.scale = 1, var.scale = 1, 
-                      groups=PCA.dat.wide.esvi$fraction,
+                      groups=PCA.dat.wide.esvi$fraction, ellipse.fill = FALSE, ellipse.linewidth=0.5,
                       ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95) +
   geom_point(aes(shape=PCA.dat.wide.esvi$depth.bin, color=PCA.dat.wide.esvi$fraction), size = 4) +
   geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
@@ -1089,13 +1861,13 @@ PC.norm.plot.esvi <- ggbiplot(PC.norm.esvi, choices = 1:2, obs.scale = 1, var.sc
 
 #
 PC.norm.plot.esvi2 <- ggbiplot(PC.norm.esvi, choices = 1:2, obs.scale = 1, var.scale = 1, 
-                      groups=PCA.dat.wide.esvi$light.depth, #labels=PCA.dat.wide.esvi$sample.ID,
-                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95)+
+                      groups=PCA.dat.wide.esvi$light.depth, ellipse.fill = FALSE, #labels=PCA.dat.wide.esvi$sample.ID,
+                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95, ellipse.linewidth=0.5)+
   geom_point(aes(shape=PCA.dat.wide.esvi$fraction, color=PCA.dat.wide.esvi$light.depth), size = 4) +
   geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
   geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
   scale_x_continuous(breaks=pretty_breaks(n=5))+
-  scale_color_manual(values=c("palevioletred2", "darkslategray3","seagreen4", "dodgerblue"))+
+  scale_color_manual(values=c("coral2", "khaki3", "indianred4", "dodgerblue"))+
   scale_shape_manual(values=c(16,1,17))+
   ggtitle("ESS-normalized")+
    theme_classic()+
@@ -1106,10 +1878,35 @@ PC.norm.plot.esvi2 <- ggbiplot(PC.norm.esvi, choices = 1:2, obs.scale = 1, var.s
     axis.text.y=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")),
     axis.text.x=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
 
+PC.norm.plot.esvi2
+dev.copy(pdf, "figures/PCA.MC.ESS.alone.pdf", width = 7, height = 7)
+dev.off()
+
 ## compile
 grid.arrange(PC.norm.plot.esvi, PC.norm.plot.esvi2)
-dev.copy(pdf, "figures/PCA.MC.ESVI alone.pdf", width = 7, height = 10, encod="MacRoman")
+dev.copy(pdf, "figures/PCA.MC.ESVI alone.pdf", width = 7, height = 10)
 dev.off()
+```
+
+
+```{r factorial PCA, eval=FALSE}
+## lines for wach of the groups : depths
+PC.norm.plot.esvi.factorial <- ggbiplot(PC.norm.esvi, choices = 1:2, obs.scale = 1, var.scale = 1, 
+                      groups=PCA.dat.wide.esvi$depth.bin:PCA.dat.wide.esvi$fraction, ellipse.linewidth=0.5, ellipse.fill=NA,
+                      ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95) +
+  geom_point(aes(color=PCA.dat.wide.esvi$depth.bin:PCA.dat.wide.esvi$fraction), size = 4) +
+  geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
+  geom_hline(yintercept=0, linetype="dashed", color = "gray60")+
+  scale_x_continuous(breaks=pretty_breaks(n=5))+
+  scale_color_manual(values=c("coral","red", "dodgerblue", "darkolivegreen4", "mediumseagreen", "goldenrod", "gold4"))+
+  ggtitle("ESS-normalized")+
+   theme_classic()+
+   theme(legend.text=element_text(size=10), 
+    panel.background = element_rect(colour = "black", linewidth=1),
+    legend.key = element_rect(color=NA, fill=NA),
+    axis.ticks.length=unit(0.2, "cm"), 
+    axis.text.y=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")),
+    axis.text.x=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
 ```
 
 If we look at just the symbionts, across all the studies...
@@ -1126,11 +1923,11 @@ PC.norm.symb<- prcomp(df.PCA.dat.symb, center = TRUE, scale= TRUE)
 PC.norm.summ.symb<-summary(PC.norm.symb) # 71% variation
 plot(PC.norm.symb, type="lines", main="PC.area eigenvalues")
 
-###### plot for PCA for symbuonts only
+###### plot for PCA for symbionts only
 
 ## PC1 and PC2 by group and depth
 PC.norm.plot.symb <- ggbiplot(PC.norm.symb, choices = 1:2, obs.scale = 1, var.scale = 1, 
-                      groups=PCA.dat.wide.symb$depth.bin,
+                      groups=PCA.dat.wide.symb$depth.bin, ellipse.fill = FALSE, ellipse.linewidth = 0.5,
                       ellipse = TRUE, circle = FALSE, alpha=0, ellipse.prob=0.95) +
   geom_point(aes(color=PCA.dat.wide.symb$depth.bin, shape=PCA.dat.wide.symb$study), size = 4) +
   geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
@@ -1147,5 +1944,83 @@ PC.norm.plot.symb <- ggbiplot(PC.norm.symb, choices = 1:2, obs.scale = 1, var.sc
     axis.text.y=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")),
     axis.text.x=element_text(margin=unit(c(0.5, 0.5, 0.5, 0.5), "cm")))
 
+PC.norm.plot.symb
+dev.copy(pdf, "figures/PCA.MC.symb.pdf", width = 5, height = 6)
+dev.off()
 ```
+
+### LDA -- ESVI only
+```{r}
+# full data = 'EAA.df.wide'
+prod<- PCA.dat.wide.esvi[!(PCA.dat.wide.esvi$fraction=="host"),]
+coral<- PCA.dat.wide.esvi[(PCA.dat.wide.esvi$fraction=="host"),]
+
+prod$fraction<-droplevels(prod$fraction)
+coral$fraction<-droplevels(coral$fraction)
+
+#Run an LDA with a jackknifing model fit to look at error rate
+#'CV = TRUE' makes the LDA run a jackknifed - leave one out - model fit
+All.lda <- lda(fraction ~ d13C.Ile.n + d13C.Leu.n + d13C.Phe.n + d13C.Thr.n + d13C.Val.n + d13C.Lys.n, data = prod, CV = TRUE)
+
+#Create a table which compares the classification from the LDA model to the actual classification
+All.reclass <- table(prod$fraction, All.lda$class) #100% success
+
+#Total percent of samples correctly classified is the sum of the diagonal of this table: 89%
+sum(diag(prop.table(All.reclass)))
+
+mean(All.lda$class==prod$fraction) # mean accuracy
+
+#Percent of each producer Group correctly reclassified: 100% symb, 100% symb
+diag(prop.table(All.reclass, 1))
+
+####################
+All.train <- lda(fraction ~ d13C.Ile.n + d13C.Leu.n + d13C.Phe.n + d13C.Thr.n + d13C.Val.n + d13C.Lys.n, data = prod)
+All.train
+
+#Write a csv file for the coefficients of LD1
+lda.info <- as.data.frame(All.train$scaling)
+
+coral.predict <- predict(object = All.train, newdata = coral)
+coral.predict.data <- data.frame(sample.ID = coral$sample.ID, depth.bin = coral$depth.bin, 
+                                 light.depth = coral$light.depth, fraction = "host",
+                                coral.predict$class, coral.predict$x)
+
+All.reclass <- table(coral$fraction, coral.predict$class) # 11 as symb, 1 as plankton
+AllProdPredict <- data.frame(sample.ID = prod$sample.ID, prod$depth.bin, prod$light.depth, fraction = prod$fraction,
+                             coral.predict.class= "prod", predict(All.train)$x)
+
+# rename columns
+colnames(AllProdPredict)<-c("sample.ID", "depth.bin", "light.depth", "fraction", "coral.predict.class", "LD1")
+
+LDA.df<-rbind(AllProdPredict, coral.predict.data)
+LDA.df$depth.bin<-as.character(LDA.df$depth.bin)
+LDA.df$frac.depth<-ifelse(LDA.df$fraction=="host", LDA.df$depth.bin, 
+                          ifelse(LDA.df$fraction=="symb", "symbiont", "plankton"))
+LDA.df$frac.depth<-as.factor(LDA.df$frac.depth)
+LDA.df$frac.depth<-factor(LDA.df$frac.depth, levels=c("plankton", "deep", "intermediate", "shallow", "symbiont"))
+
+LDA.plot<-ggplot(LDA.df, aes(x=LD1, y=frac.depth, fill=frac.depth))+
+  geom_boxplot(alpha=0.9, outlier.color=NA)+
+  geom_jitter(aes(fill=frac.depth, shape=fraction), colour="black", size=3, show.legend = F) +
+  geom_vline(xintercept=0, linetype="dashed", color = "gray60")+
+  annotate(geom="text", label="Symbiont-Classified", x=-3, y=5.5, color="black", size=3) +
+  annotate(geom="text", label="Plankton-Classified", x=2.5, y=5.5, color="black", size=3) +
+  scale_fill_manual(values=c("dodgerblue", "indianred4", "khaki3", "coral2", "mediumseagreen"))+
+  scale_shape_manual(values=c(21,8,24))+
+  ylab("Consumer or Source") +
+  xlab("LD1") +
+  theme_classic() +
+  guides(color = guide_legend(reverse=TRUE))+
+  guides(fill = "none")
+
+LDA.plot
+dev.copy(pdf, "figures/LDA.pdf", width = 6, height = 5)
+dev.off()
+
+LDA.plot.alt<-ggplot(LDA.df, aes(x=LD1, y=interaction(fraction,depth.bin), fill=frac.depth))+
+  geom_boxplot(alpha=0.9, outlier.color=NA)
+
+```
+
+### MIXSIAR
 
